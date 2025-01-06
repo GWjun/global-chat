@@ -2,11 +2,9 @@ import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
 import App from './App'
 import Home from '#pages/Home'
-import About from '#pages/About'
 
 export const PATH = {
   home: '/',
-  about: 'about',
 }
 
 const routes: RouteObject[] = [
@@ -21,18 +19,10 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <Home />,
-        loader: async () => {
-          // server side code
-          return fetch(`https://jsonplaceholder.typicode.com/todos`)
-        },
+        loader: async () => {},
       },
       {
-        children: [
-          {
-            path: PATH.about,
-            element: <About />,
-          },
-        ],
+        children: [{}],
       },
     ],
   },

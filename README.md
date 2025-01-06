@@ -1,8 +1,6 @@
-# Vite SSR Boilerplate with Fastify
+# Gloabl Chat
 
-This repository provides a boilerplate for building server-side rendered (SSR) applications using **Vite** and **Fastify**.
 
-It also supports server and client routing using **React Router**.
 
 </br>
 
@@ -44,39 +42,6 @@ pnpm install
 
 </br>
 
-## Route
-
-By declaring route objects in `src/routes.tsx`, routing is handled on both the server and client using `StaticRouterProvider` and `RouterProvider`, respectively.
-
-</br>
-
-## Data Fetching
-
-Using React Router’s `loader`, data can be fetched on the server and delivered to the client.
-
-```tsx
-const routes: RouteObject[] = [
-  {
-    path: '/',
-    element: <Home />,
-    loader: async () => {
-      // server side code
-      return fetch(`https://jsonplaceholder.typicode.com/todos`)
-    },
-  },
-]
-```
-
-```tsx
-export default function Home() {
-  // get ssr data
-  const data: TodoType[] = useLoaderData()
-  // ...
-}
-```
-
-</br>
-
 ## Structure
 
 ```
@@ -93,7 +58,3 @@ export default function Home() {
 
 </br>
 
-## Reference
-
-- https://vite.dev/guide/ssr
-- https://reactrouter.com/start/framework/custom
