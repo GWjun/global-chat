@@ -1,17 +1,24 @@
 import { Outlet } from 'react-router'
-import { cn } from '#components/lib/utils.ts'
 import './index.css'
 
 import QueryProvider from '#contexts/QueryProvider'
 import ThemeProvider from '#contexts/ThemeProvider'
+import { cn } from '#components/lib/utils.ts'
+
+export const widthStyle = 'max-w-[30rem] mx-auto'
 
 function App() {
   return (
     <QueryProvider>
       <ThemeProvider>
-        <main className={cn('flex flex-col grow')}>
+        <div
+          className={cn(
+            'min-h-[100dvh] box-content border-x border-border shadow-md',
+            widthStyle,
+          )}
+        >
           <Outlet />
-        </main>
+        </div>
       </ThemeProvider>
     </QueryProvider>
   )
