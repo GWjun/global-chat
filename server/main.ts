@@ -5,9 +5,10 @@ import path from 'path'
 import Fastify from 'fastify'
 import fastifyStatic from '@fastify/static'
 import fastifyCompress from '@fastify/compress'
+import AutoLoad from '@fastify/autoload'
 
 import { createServer } from 'vite'
-import { createFetchRequest, loadRender, loadTemplate } from './util'
+import { createFetchRequest, loadRender, loadTemplate } from './utils/ssr.ts'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -19,8 +20,8 @@ const server = Fastify({
   },
 })
 
+// vite config
 let vite: ViteDevServer | undefined
-
 if (!isProduction) {
   vite = await createServer({
     server: { middlewareMode: true },
@@ -39,10 +40,20 @@ if (!isProduction) {
   server.register(fastifyCompress, { encodings: ['gzip'] })
 
   server.register(fastifyStatic, {
-    root: path.resolve(__dirname, '../dist/client'),
+    root: path.join(__dirname, '../dist/client'),
     prefix: '/',
   })
 }
+
+// backend resource config
+server.register(AutoLoad, {
+  dir: path.join(__dirname, 'routes'),
+  options: { prefix: '/api/v1' },
+})
+
+server.get('/favicon.ico', async (_, reply) => {
+  reply.status(204).send()
+})
 
 // serve routing page
 async function handleSSR(req: FastifyRequest, reply: FastifyReply) {

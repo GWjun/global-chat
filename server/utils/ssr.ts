@@ -32,7 +32,7 @@ export async function loadRender(vite?: ViteDevServer) {
   // for production
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { render } = await import('../dist/server/entry.js')
+  const { render } = await import('../../dist/server/entry.js')
   return render
 }
 

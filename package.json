@@ -9,12 +9,15 @@
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr server/entry.tsx",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docker:start": "docker-compose up -d"
   },
   "dependencies": {
+    "@fastify/autoload": "^6.0.3",
     "@fastify/compress": "^8.0.1",
     "@fastify/one-line-logger": "^2.0.1",
     "@fastify/static": "^8.0.3",
+    "@prisma/client": "^6.1.0",
     "@tanstack/react-query": "^5.62.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

@@ -6,15 +6,30 @@
 
 ## Installation
 
-Clone the repository and install the dependencies:
+1. Clone the repository and install the dependencies:
 
 ```bash
 pnpm install
 ```
 
+2. Create a .env file in the root directory of the project and add the following content to configure the database connection:
+
+```
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+```
+
 </br>
 
 ## Run
+
+1. Start Database
+
+```sh
+pnpm docker:start
+pnpx prisma generate
+```
+
+2. Start Application
 
 - **Development:**
 
@@ -52,7 +67,7 @@ pnpm install
 └── server/              # Fastify server code
     ├── entry.tsx        # Server-side entry point for SSR render
     ├── main.ts          # Main server file
-    └── util.ts          # Utility function file
+    └── ssr.ts          # Utility function file
 
 ```
 

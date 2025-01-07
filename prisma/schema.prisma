@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  nickname     String
+  language     String
+  profileImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  chatRooms             ChatRoomUser[]
+  messages              Message[]
+  sentNotifications     Notification[] @relation("SentNotifications")
+  receivedNotifications Notification[] @relation("ReceivedNotifications")
+}
+
+model ChatRoom {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users        ChatRoomUser[]
+  messages     Message[]
+  translations MessageTranslation[]
+}
+
+model ChatRoomUser {
+  id         String   @id @default(uuid())
+  userId     String
+  chatRoomId String
+  joinedAt   DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id])
+
+  @@unique([userId, chatRoomId])
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  content    String
+  userId     String
+  chatRoomId String
+  language   String
+  createdAt  DateTime @default(now())
+
+  user         User                 @relation(fields: [userId], references: [id])
+  chatRoom     ChatRoom             @relation(fields: [chatRoomId], references: [id])
+  translations MessageTranslation[]
+}
+
+model MessageTranslation {
+  id         String   @id @default(uuid())
+  messageId  String
+  chatRoomId String
+  language   String
+  content    String
+  createdAt  DateTime @default(now())
+
+  message  Message  @relation(fields: [messageId], references: [id])
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id])
+
+  @@unique([messageId, language])
+}
+
+model Notification {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  type       String
+  content    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  sender   User @relation("SentNotifications", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedNotifications", fields: [receiverId], references: [id])
+}
