@@ -7,9 +7,10 @@ import fastifyStatic from '@fastify/static'
 import fastifyCompress from '@fastify/compress'
 
 import { createServer } from 'vite'
-import { createFetchRequest, loadRender, loadTemplate } from './utils/ssr.ts'
-import plugins from './plugins'
-import routes from './routes'
+import { createFetchRequest, loadRender, loadTemplate } from '@utils/ssr.ts'
+import plugins from '@plugins'
+import routes from '@routes'
+import APIError from '#apis/APIError.ts'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -59,9 +60,23 @@ server.setErrorHandler((error, _req, reply) => {
   console.error(error)
 
   if (error.validation) {
-    reply.status(400).send({ error: 'Invalid request data' })
+    reply.status(400).send({
+      statusCode: 400,
+      errorCode: 'INVALID_REQUEST',
+      message: '잘못된 요청입니다.',
+    })
+  } else if (error instanceof APIError) {
+    reply.status(error.statusCode).send({
+      statusCode: error.statusCode,
+      errorCode: error.errorCode,
+      message: error.message,
+    })
   } else {
-    reply.code(500).send({ error: 'Internal server error' })
+    reply.status(500).send({
+      statusCode: 500,
+      errorCode: 'INTERNAL_SERVER_ERROR',
+      message: '서버에 문제가 생겼어요. \\n잠시 후 다시 시도해 주세요.',
+    })
   }
 })
 
