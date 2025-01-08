@@ -5,10 +5,11 @@ import path from 'path'
 import Fastify from 'fastify'
 import fastifyStatic from '@fastify/static'
 import fastifyCompress from '@fastify/compress'
-import AutoLoad from '@fastify/autoload'
 
 import { createServer } from 'vite'
 import { createFetchRequest, loadRender, loadTemplate } from './utils/ssr.ts'
+import plugins from './plugins'
+import routes from './routes'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -46,12 +47,15 @@ if (!isProduction) {
 }
 
 // backend resource config
-server.register(AutoLoad, {
-  dir: path.join(__dirname, 'routes'),
-  options: { prefix: '/api/v1' },
+plugins.forEach(({ plugin }) => {
+  server.register(plugin)
 })
 
-server.get('/favicon.ico', async (_, reply) => {
+routes.forEach(({ route, prefix }) => {
+  server.register(route, { prefix })
+})
+
+server.get('/favicon.ico', async (_req, reply) => {
   reply.status(204).send()
 })
 

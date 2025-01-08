@@ -9,7 +9,11 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "#*": ["./src/*"]
-    }
-  }
+      "#*": ["./src/*"],
+      "@*": ["./server/*"]
+    },
+    "typeRoots": [
+      "./server/types/*"
+    ]
+  },
 }
