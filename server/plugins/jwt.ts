@@ -5,7 +5,7 @@ import cookie from '@fastify/cookie'
 
 export default fp(async (fastify) => {
   fastify.register(jwt, {
-    secret: process.env.JWT_SECRET || 'your-secret-key',
+    secret: process.env.JWT_SECRET || 'your-jwt-secret',
   })
 
   fastify.register(cookie, {
