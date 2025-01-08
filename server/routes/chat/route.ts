@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 
-export default async function (fastify: FastifyInstance) {
-  fastify.get('/chatting', async (_, reply) => {
+export default async function chatRoutes(fastify: FastifyInstance) {
+  fastify.get('/message', async (_, reply) => {
     reply.send({ hello: 'world' })
   })
 }

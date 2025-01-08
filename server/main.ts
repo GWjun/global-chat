@@ -55,6 +55,16 @@ routes.forEach(({ route, prefix }) => {
   server.register(route, { prefix })
 })
 
+server.setErrorHandler((error, _req, reply) => {
+  console.error(error)
+
+  if (error.validation) {
+    reply.status(400).send({ error: 'Invalid request data' })
+  } else {
+    reply.code(500).send({ error: 'Internal server error' })
+  }
+})
+
 server.get('/favicon.ico', async (_req, reply) => {
   reply.status(204).send()
 })
