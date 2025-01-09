@@ -1,7 +1,8 @@
 import type { FastifyInstance } from 'fastify'
-import { hash, compare } from 'bcrypt'
+import bcryptjs from 'bcryptjs'
 import prisma from '@utils/prisma.ts'
 import { TokenService } from '@services/auth/token.ts'
+import { getAPIError } from '@utils/getAPIError.ts'
 
 interface LoginBody {
   email: string
@@ -15,7 +16,7 @@ interface RegisterBody {
   language: string
 }
 
-export default async function authRoutes(fastify: FastifyInstance) {
+export default async function authRouter(fastify: FastifyInstance) {
   const tokenService = new TokenService(fastify)
 
   fastify.post<{ Body: RegisterBody }>('/register', async (req, reply) => {
@@ -27,10 +28,10 @@ export default async function authRoutes(fastify: FastifyInstance) {
       })
 
       if (existingUser) {
-        return reply.code(400).send({ error: 'Email already exists' })
+        throw getAPIError('EMAIL_ALREADY_EXIST')
       }
 
-      const hashedPassword = await hash(password, 10)
+      const hashedPassword = await bcryptjs.hash(password, 10)
 
       const user = await tx.user.create({
         data: {
@@ -70,13 +71,13 @@ export default async function authRoutes(fastify: FastifyInstance) {
     })
 
     if (!user) {
-      return reply.code(401).send({ error: 'Unauthorized' })
+      throw getAPIError('UNAUTHORIZED')
     }
 
-    const isValid = await compare(password, user.password)
+    const isValid = await bcryptjs.compare(password, user.password)
 
     if (!isValid) {
-      return reply.code(401).send({ error: 'Unauthorized' })
+      throw getAPIError('UNAUTHORIZED')
     }
 
     const { accessToken, refreshToken } = await tokenService.generateTokens(
@@ -102,14 +103,14 @@ export default async function authRoutes(fastify: FastifyInstance) {
     const refreshToken = req.cookies.refreshToken
 
     if (!refreshToken) {
-      return reply.code(401).send({ error: 'Nothing to have token' })
+      throw getAPIError('INVALID_REQUEST')
     }
 
     const userId = await tokenService.verifyRefreshToken(refreshToken)
 
     if (!userId) {
       reply.clearCookie('refreshToken')
-      return reply.code(401).send({ error: 'Unauthorized' })
+      throw getAPIError('UNAUTHORIZED')
     }
 
     const { accessToken, refreshToken: newRefreshToken } =
