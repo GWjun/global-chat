@@ -18,7 +18,7 @@ export class TokenService {
     return { accessToken, refreshToken }
   }
 
-  async verifyRefreshToken(refreshToken: string): Promise<string | null> {
+  async verifyRefreshToken(refreshToken: string) {
     try {
       const decoded = this.fastify.jwt.verify(refreshToken) as {
         id: string

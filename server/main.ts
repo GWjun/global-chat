@@ -3,6 +3,7 @@ import type { ViteDevServer } from 'vite'
 
 import path from 'path'
 import Fastify from 'fastify'
+import cors from '@fastify/cors'
 import fastifyStatic from '@fastify/static'
 import fastifyCompress from '@fastify/compress'
 
@@ -20,6 +21,11 @@ const server = Fastify({
       target: '@fastify/one-line-logger',
     },
   },
+})
+
+server.register(cors, {
+  origin: 'http://localhost:3000',
+  credentials: true,
 })
 
 // vite config
@@ -88,7 +94,7 @@ server.get('/favicon.ico', async (_req, reply) => {
 async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
   const url = req.url
   const res = reply.raw
-  const fetchRequest = createFetchRequest(req, reply)
+  const fetchRequest = createFetchRequest(req, reply) // for react router adaption
 
   const template = await loadTemplate(url, vite)
   const render = await loadRender(vite)

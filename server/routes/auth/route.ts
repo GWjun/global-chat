@@ -10,6 +10,7 @@ import bcryptjs from 'bcryptjs'
 import prisma from '@utils/prisma.ts'
 import { TokenService } from '@services/auth/token.ts'
 import { getAPIError } from '@utils/getAPIError.ts'
+import { BASE_URL, END_POINTS } from '@routes/path.ts'
 
 export default async function authRouter(fastify: FastifyInstance) {
   const tokenService = new TokenService(fastify)
@@ -49,7 +50,7 @@ export default async function authRouter(fastify: FastifyInstance) {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
-          path: '/auth/refresh',
+          path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
           signed: true,
           maxAge: 7 * 24 * 60 * 60, // 7 days
         })
@@ -92,7 +93,7 @@ export default async function authRouter(fastify: FastifyInstance) {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        path: '/auth/refresh',
+        path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
         signed: true,
         maxAge: 7 * 24 * 60 * 60, // 7 days
       })
@@ -105,27 +106,27 @@ export default async function authRouter(fastify: FastifyInstance) {
   )
 
   fastify.post('/refresh', async (req, reply) => {
-    const refreshToken = req.cookies.refreshToken
+    const signedCookie = req.cookies.refreshToken
+    if (!signedCookie) throw getAPIError('INVALID_REQUEST')
 
-    if (!refreshToken) {
-      throw getAPIError('INVALID_REQUEST')
-    }
+    const { valid, value: token } = fastify.unsignCookie(signedCookie)
+    if (!valid) throw getAPIError('UNAUTHORIZED')
 
-    const userId = await tokenService.verifyRefreshToken(refreshToken)
+    const userId = await tokenService.verifyRefreshToken(token)
 
     if (!userId) {
       reply.clearCookie('refreshToken')
       throw getAPIError('UNAUTHORIZED')
     }
 
-    const { accessToken, refreshToken: newRefreshToken } =
+    const { accessToken, refreshToken: newToken } =
       await tokenService.generateTokens(userId)
 
-    reply.setCookie('refreshToken', newRefreshToken, {
+    reply.setCookie('refreshToken', newToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      path: '/auth/refresh',
+      path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
       signed: true,
       maxAge: 7 * 24 * 60 * 60, // 7 days
     })
