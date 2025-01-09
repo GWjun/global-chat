@@ -1,11 +1,10 @@
 import authRoutes from '@routes/auth/route.ts'
 import chatRoutes from '@routes/chat/route.ts'
-
-export const baseUrl = '/api/v1'
+import { BASE_URL, END_POINTS } from '@routes/path.ts'
 
 const routes = [
-  { route: authRoutes, prefix: `${baseUrl}/auth` },
-  { route: chatRoutes, prefix: `${baseUrl}/chat` },
+  { route: authRoutes, prefix: `${BASE_URL}/${END_POINTS.AUTH}` },
+  { route: chatRoutes, prefix: `${BASE_URL}/${END_POINTS.CHAT}` },
 ]
 
 export default routes
