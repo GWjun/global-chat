@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import fp from 'fastify-plugin'
 import jwt from '@fastify/jwt'
 import cookie from '@fastify/cookie'
+import { getAPIError } from '@utils/getAPIError.ts'
 
 export default fp(async (fastify) => {
   fastify.register(jwt, {
@@ -22,7 +23,7 @@ export default fp(async (fastify) => {
 
   fastify.decorate(
     'authenticate',
-    async (req: FastifyRequest, reply: FastifyReply) => {
+    async (req: FastifyRequest, _reply: FastifyReply) => {
       try {
         const authHeader = req.headers.authorization
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -32,7 +33,7 @@ export default fp(async (fastify) => {
         const token = authHeader.substring(7)
         req.user = fastify.jwt.verify(token)
       } catch (err) {
-        reply.code(401).send({ error: 'Unauthorized' })
+        throw getAPIError('UNAUTHORIZED')
       }
     },
   )

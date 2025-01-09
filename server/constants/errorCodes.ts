@@ -15,4 +15,8 @@ export const ERROR_CODES = {
     statusCode: 400,
     message: '이미 존재하는 이메일 입니다.',
   },
+  UNAUTHORIZED: {
+    statusCode: 401,
+    message: '로그인 후 이용해 주세요.',
+  },
 }
