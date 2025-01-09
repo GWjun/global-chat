@@ -2,12 +2,14 @@ import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
 import App from './App'
 
+import ErrorBoundary from '#components/ErrorBoundary'
+import Layout from '#components/Layout'
+
 // don't need to lazy loading
 import Home from '#pages/Home'
 import Login from '#pages/Login'
 import Register from '#pages/Register'
 
-import Layout from '#components/Layout'
 import Chat from '#pages/Chat'
 import Friend from '#pages/Friend'
 import Profile from '#pages/Profile'
@@ -29,12 +31,15 @@ const routes: RouteObject[] = [
         <App />
       </Suspense>
     ),
+    errorElement: <ErrorBoundary isRootError />,
     children: [
       {
         index: true,
         element: <Home />,
+        errorElement: <ErrorBoundary />,
       },
       {
+        errorElement: <ErrorBoundary />,
         children: [
           {
             path: PATH.login,

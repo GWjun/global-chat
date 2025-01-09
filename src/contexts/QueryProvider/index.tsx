@@ -1,7 +1,23 @@
 import type { ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { toast } from '#hooks/use-toast.ts'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      throwOnError: true, // reset data on ErrorBoundary Component
+      retry: 0,
+    },
+    mutations: {
+      onError: (error) => {
+        toast({
+          title: error.message || '요청에 실패햐였습니다.',
+          variant: 'destructive',
+        })
+      },
+    },
+  },
+})
 
 export default function QueryProvider({ children }: { children: ReactNode }) {
   return (

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { useState, useEffect } from 'react'
 import { ThemeContext, ThemeMode } from '#contexts/ThemeProvider/context'
+import { Toaster } from '#components/_common/Toast/toaster.tsx'
 
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>(() => {
@@ -35,6 +36,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
+      <Toaster />
     </ThemeContext.Provider>
   )
 }
