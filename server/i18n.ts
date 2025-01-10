@@ -8,10 +8,10 @@ i18next
   .use(LanguageDetector)
   .init({
     // debug: true,
-    preload: ['en', 'ko'],
+    preload: ['en', 'ko', 'ja', 'zh'],
     fallbackLng: 'en',
-    ns: ['translation'],
-    defaultNS: 'translation',
+    ns: ['home', 'login'],
+    defaultNS: 'home',
     backend: {
       loadPath: path.join(__dirname, '../public/locales/{{lng}}/{{ns}}.json'),
       addPath: path.join(
