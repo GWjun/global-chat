@@ -1,3 +1,18 @@
 {
-  "title": "en_home"
+  "title": "AI Translation Messenger",
+  "description": "Communicate naturally with people around the world.",
+  "first": {
+    "title": "Real-time Translation",
+    "description": "Experience real-time translation powered by LLM."
+  },
+  "second": {
+    "title": "Global Chat",
+    "description": "Connect with users worldwide."
+  },
+  "third": {
+    "title": "Stay Connected Anytime",
+    "description": "Access easily through your browser."
+  },
+  "login": "Login",
+  "randomChat": "Start Random Chat"
 }

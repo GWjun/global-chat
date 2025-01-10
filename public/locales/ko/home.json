@@ -1,3 +1,18 @@
 {
-  "title": "안녕하세요"
+  "title": "AI 번역 메신저",
+  "description": "전 세계 사람들과 자연스럽게 대화 해보세요",
+  "first": {
+    "title": "실시간 번역",
+    "description": "LLM을 활용한 실시간 번역"
+  },
+  "second": {
+    "title": "글로벌 채팅",
+    "description": "전 세계 사용자들과 소통"
+  },
+  "third": {
+    "title": "언제 어디서나 연결",
+    "description": "브라우저로 쉽게 접근"
+  },
+  "login": "로그인하기",
+  "randomChat": "랜덤 채팅 시작하기"
 }
