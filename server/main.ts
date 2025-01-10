@@ -13,9 +13,9 @@ import plugins from '@plugins'
 import routes from '@routes'
 import APIError from '#apis/APIError.ts'
 
+import type { Resource } from 'i18next'
 import { plugin } from 'i18next-http-middleware'
 import i18next from './i18n'
-import { Resource } from 'i18next'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -68,26 +68,26 @@ routes.forEach(({ route, prefix }) => {
   server.register(route, { prefix })
 })
 
-server.setErrorHandler((error, _req, reply) => {
+server.setErrorHandler((error, req, reply) => {
   console.error(error)
 
   if (error.validation) {
     reply.status(400).send({
       statusCode: 400,
       errorCode: 'INVALID_REQUEST',
-      message: '잘못된 요청입니다.',
+      message: req.i18n.t('INVALID_REQUEST'),
     })
   } else if (error instanceof APIError) {
     reply.status(error.statusCode).send({
       statusCode: error.statusCode,
       errorCode: error.errorCode,
-      message: error.message,
+      message: req.i18n.t(error.errorCode),
     })
   } else {
     reply.status(500).send({
       statusCode: 500,
       errorCode: 'INTERNAL_SERVER_ERROR',
-      message: '서버에 문제가 생겼어요. \\n잠시 후 다시 시도해 주세요.',
+      message: req.i18n.t('INTERNAL_SERVER_ERROR'),
     })
   }
 })
