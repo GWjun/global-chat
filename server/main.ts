@@ -13,6 +13,10 @@ import plugins from '@plugins'
 import routes from '@routes'
 import APIError from '#apis/APIError.ts'
 
+import { plugin } from 'i18next-http-middleware'
+import i18next from './i18n'
+import { Resource } from 'i18next'
+
 const isProduction = process.env.NODE_ENV === 'production'
 
 const server = Fastify({
@@ -27,6 +31,8 @@ server.register(cors, {
   origin: 'http://localhost:3000',
   credentials: true,
 })
+
+server.register(plugin, { i18next })
 
 // vite config
 let vite: ViteDevServer | undefined
@@ -107,6 +113,18 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       stream.pipe(res)
     },
     onAllReady() {
+      const initialI18nStore: Resource = {}
+      req.i18n.languages.forEach((lng) => {
+        initialI18nStore[lng] = req.i18n.services.resourceStore.data[lng]
+      })
+
+      const script = `
+        <script>
+          window.initialI18nStore = "${JSON.stringify(initialI18nStore)}";
+          window.initialLanguage = "${req.i18n.language}";
+        </script>`
+
+      parts[1] = parts[1].replace('<!--ssr-script-->', script)
       res.write(parts[1])
       res.end()
     },
