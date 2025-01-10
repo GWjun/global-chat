@@ -2,7 +2,8 @@ import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
 import App from './App'
 
-import ErrorBoundary from '#components/ErrorBoundary'
+import Error from 'src/pages/Error'
+import NotFound from '#pages/NotFound'
 import Layout from '#components/Layout'
 
 // don't need to lazy loading
@@ -31,15 +32,15 @@ const routes: RouteObject[] = [
         <App />
       </Suspense>
     ),
-    errorElement: <ErrorBoundary isRootError />,
+    errorElement: <Error isRootError />,
     children: [
       {
         index: true,
         element: <Home />,
-        errorElement: <ErrorBoundary />,
+        errorElement: <Error />,
       },
       {
-        errorElement: <ErrorBoundary />,
+        errorElement: <Error />,
         children: [
           {
             path: PATH.login,
@@ -67,6 +68,10 @@ const routes: RouteObject[] = [
             ],
           },
         ],
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

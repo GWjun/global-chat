@@ -8,7 +8,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main className="h-[calc(100dvh-7.5rem)] overflow-y-auto bg-[#F9FAFB]">
+      <main className="h-[calc(100dvh-7.5rem)] overflow-y-auto">
         <Outlet />
       </main>
       <Footer pathname={pathname} />

@@ -13,7 +13,7 @@ function App() {
       <ThemeProvider>
         <div
           className={cn(
-            'min-h-[100dvh] box-content border-x border-border shadow-md',
+            'min-h-[100dvh] box-content border-x border-border shadow-md bg-[#F9FAFB]',
             widthStyle,
           )}
         >
