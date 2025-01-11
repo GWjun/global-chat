@@ -69,7 +69,7 @@ routes.forEach(({ route, prefix }) => {
 })
 
 server.setErrorHandler((error, req, reply) => {
-  console.error(error)
+  // console.error(error)
 
   if (error.validation) {
     reply.status(400).send({

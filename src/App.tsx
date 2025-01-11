@@ -4,8 +4,9 @@ import './index.css'
 
 import useInitToken from '#hooks/useInitToken.ts'
 import QueryProvider from '#contexts/QueryProvider'
+import { Toaster } from '#components/_common/Toast/toaster.tsx'
 
-export const widthStyle = 'max-w-[30rem] mx-auto'
+export const widthStyle = 'max-w-[30rem] 2xl:max-w-[40rem] mx-auto'
 
 function App() {
   const { isPending } = useInitToken()
@@ -21,6 +22,7 @@ function App() {
       >
         <Outlet />
       </div>
+      <Toaster />
     </QueryProvider>
   )
 }

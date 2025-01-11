@@ -3,19 +3,19 @@ import { baseFetcher } from '#apis/apiClient.ts'
 import { END_POINTS } from '@routes/path.ts'
 
 export const requestPostLogin = async (data: RequestLogin) => {
-  const response = await baseFetcher.post(`${END_POINTS.AUTH}/login`, {
+  const response = await baseFetcher.post<{
+    accessToken: string
+  }>(`${END_POINTS.AUTH}/login`, {
     json: data,
   })
 
-  return (await response.json()) as {
-    accessToken: string
-  }
+  return response.json()
 }
 
 export const requestPostRefresh = async () => {
-  const response = await baseFetcher.post(`${END_POINTS.AUTH}/refresh`)
-
-  return (await response.json()) as {
+  const response = await baseFetcher.post<{
     accessToken: string
-  }
+  }>(`${END_POINTS.AUTH}/refresh`)
+
+  return response.json()
 }

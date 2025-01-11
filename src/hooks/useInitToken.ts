@@ -8,8 +8,12 @@ export default function useInitToken() {
 
   useEffect(() => {
     async function initialize() {
-      const { accessToken } = await requestPostRefresh()
-      setAccessToken(accessToken)
+      try {
+        const { accessToken } = await requestPostRefresh()
+        setAccessToken(accessToken)
+      } catch {
+        /* empty */
+      }
       setIsPending(false)
     }
 

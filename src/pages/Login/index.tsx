@@ -53,6 +53,7 @@ export default function Login() {
               name="password"
               type="password"
               placeholder={t('password')}
+              autoComplete="off"
               className="h-12"
             />
           </Label>

@@ -9,7 +9,6 @@ export const baseFetcher = ky.create({
   prefixUrl: BASE_URL,
   retry: {
     limit: 1,
-    methods: ['get', 'post'],
     statusCodes: [403],
   },
   hooks: {
@@ -27,7 +26,7 @@ export const baseFetcher = ky.create({
     afterResponse: [
       async (_request, _options, response) => {
         if (!response.ok) {
-          if (response.status === 401) logout()
+          if (response.status === 401 && accessToken) logout()
           throw (await response.json()) as APIError
         }
 
