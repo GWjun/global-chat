@@ -4,6 +4,7 @@ import App from './App'
 
 import Error from 'src/pages/Error'
 import NotFound from '#pages/NotFound'
+import VisitorOutlet from '#components/VisitorOutlet'
 import Layout from '#components/Layout'
 
 // don't need to lazy loading
@@ -43,12 +44,17 @@ const routes: RouteObject[] = [
         errorElement: <Error />,
         children: [
           {
-            path: PATH.login,
-            element: <Login />,
-          },
-          {
-            path: PATH.register,
-            element: <Register />,
+            element: <VisitorOutlet />,
+            children: [
+              {
+                path: PATH.login,
+                element: <Login />,
+              },
+              {
+                path: PATH.register,
+                element: <Register />,
+              },
+            ],
           },
           {
             element: <Layout />,

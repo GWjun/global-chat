@@ -7,5 +7,15 @@ export const requestPostLogin = async (data: RequestLogin) => {
     json: data,
   })
 
-  return response.json()
+  return (await response.json()) as {
+    accessToken: string
+  }
+}
+
+export const requestPostRefresh = async () => {
+  const response = await baseFetcher.post(`${END_POINTS.AUTH}/refresh`)
+
+  return (await response.json()) as {
+    accessToken: string
+  }
 }
