@@ -1,3 +1,13 @@
 {
-  "title": "en_login"
+  "title": "Login",
+  "description": "Start your AI translation chat.",
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "register": "Sign Up",
+  "schema": {
+    "email": "Please enter a valid email address.",
+    "password": "Please enter your password."
+  },
+  "fail": "Please check your email and password."
 }

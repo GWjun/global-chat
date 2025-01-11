@@ -1,3 +1,13 @@
 {
-  "title": "로그인"
+  "title": "로그인",
+  "description": "AI 번역 채팅을 시작하세요",
+  "email": "이메일",
+  "password": "비밀번호",
+  "login": "로그인",
+  "register": "회원가입",
+  "schema" : {
+    "email": "유효한 이메일 주소를 입력하세요.",
+    "password": "비밀번호를 입력하세요."
+  },
+  "fail": "아이디 및 비밀번호를 확인해 주세요."
 }

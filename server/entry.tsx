@@ -8,16 +8,17 @@ import {
   StaticRouterProvider,
 } from 'react-router'
 import routes from '../src/routes'
+
+import type { i18n } from 'i18next'
 import { I18nextProvider } from 'react-i18next'
-import { FastifyRequest } from 'fastify'
 
 const { query, dataRoutes } = createStaticHandler(routes)
 
 export const render = async (
-  req: FastifyRequest,
-  options: RenderToPipeableStreamOptions,
+  req: Request,
+  options: RenderToPipeableStreamOptions & { i18n: i18n },
 ) => {
-  const context = await query(req as unknown as Request)
+  const context = await query(req)
 
   if (context instanceof Response) {
     return context
@@ -26,7 +27,7 @@ export const render = async (
   const router = createStaticRouter(dataRoutes, context)
 
   const stream = renderToPipeableStream(
-    <I18nextProvider i18n={req.i18n}>
+    <I18nextProvider i18n={options.i18n}>
       <StaticRouterProvider router={router} context={context} />
     </I18nextProvider>,
     options,

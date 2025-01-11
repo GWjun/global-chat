@@ -12,7 +12,12 @@ export default function Footer({ pathname }: FooterProps) {
   const itemClassName = 'flex flex-col items-center gap-1 w-24 text-gray-400'
 
   return (
-    <footer className={cn('fixed z-50 bottom-0 w-full h-[4rem]', widthStyle)}>
+    <footer
+      className={cn(
+        'fixed z-50 bottom-0 w-full h-[4rem] bg-background',
+        widthStyle,
+      )}
+    >
       <nav className="h-full">
         <ul className="flex justify-evenly items-center h-full">
           <li>

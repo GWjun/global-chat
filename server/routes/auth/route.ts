@@ -14,6 +14,7 @@ import { BASE_URL, END_POINTS } from '@routes/path.ts'
 
 export default async function authRouter(fastify: FastifyInstance) {
   const tokenService = new TokenService(fastify)
+  const COOKIE_PATH = `${BASE_URL}/${END_POINTS.AUTH}`
 
   fastify.post<{ Body: RegisterDto }>(
     '/register',
@@ -50,9 +51,9 @@ export default async function authRouter(fastify: FastifyInstance) {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
-          path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
+          path: COOKIE_PATH,
           signed: true,
-          maxAge: 7 * 24 * 60 * 60, // 7 days
+          maxAge: 14 * 24 * 60 * 60, // 14 days
         })
 
         return { user, accessToken }
@@ -93,9 +94,9 @@ export default async function authRouter(fastify: FastifyInstance) {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
+        path: COOKIE_PATH,
         signed: true,
-        maxAge: 7 * 24 * 60 * 60, // 7 days
+        maxAge: 14 * 24 * 60 * 60, // 14 days
       })
 
       return {
@@ -116,21 +117,25 @@ export default async function authRouter(fastify: FastifyInstance) {
 
     if (!userId) {
       reply.clearCookie('refreshToken')
-      throw getAPIError('UNAUTHORIZED')
+      throw getAPIError('SESSION_EXPIRED')
     }
 
-    const { accessToken, refreshToken: newToken } =
-      await tokenService.generateTokens(userId)
-
-    reply.setCookie('refreshToken', newToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
-      signed: true,
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-    })
-
+    const { accessToken } = await tokenService.generateTokens(userId)
     return { accessToken }
+  })
+
+  fastify.post('/logout', async (req, reply) => {
+    const signedCookie = req.cookies.refreshToken
+
+    if (signedCookie) {
+      reply.clearCookie('refreshToken', {
+        path: COOKIE_PATH,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      })
+    }
+
+    return { message: 'Logged out successfully' }
   })
 }

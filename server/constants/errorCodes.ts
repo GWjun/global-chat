@@ -14,4 +14,7 @@ export const ERROR_CODES = {
   UNAUTHORIZED: {
     statusCode: 401,
   },
+  SESSION_EXPIRED: {
+    statusCode: 401,
+  },
 }

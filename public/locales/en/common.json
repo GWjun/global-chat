@@ -1,0 +1,10 @@
+{
+  "error": {
+    "title": "An error occurred.",
+    "action": "Reload"
+  },
+  "notfound": {
+    "title": "The page you requested could not be found.",
+    "action": "Go Back"
+  }
+}

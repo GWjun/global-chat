@@ -10,7 +10,8 @@ i18next
   .init({
     // debug: true,
     fallbackLng: 'en',
-    defaultNS: 'home',
+    ns: ['common'],
+    defaultNS: 'common',
     load: 'languageOnly',
     interpolation: {
       escapeValue: false,
