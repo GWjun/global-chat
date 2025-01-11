@@ -13,7 +13,7 @@ const router = createBrowserRouter(routes, {
 })
 
 function ClientApp() {
-  useSSR(window.initialI18nStore as unknown as Resource, window.initialLanguage)
+  useSSR(window.initialI18nStore, window.initialLanguage)
 
   return (
     <StrictMode>
@@ -29,7 +29,7 @@ declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     __staticRouterHydrationData: any
-    initialI18nStore: string
+    initialI18nStore: Resource
     initialLanguage: string
   }
 }

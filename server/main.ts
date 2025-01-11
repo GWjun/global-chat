@@ -109,6 +109,7 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
   res.write(parts[0])
 
   const { stream } = await render(fetchRequest, {
+    i18n: req.i18n,
     onShellReady() {
       stream.pipe(res)
     },
@@ -120,7 +121,7 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
 
       const script = `
         <script>
-          window.initialI18nStore = "${JSON.stringify(initialI18nStore)}";
+          window.initialI18nStore = ${JSON.stringify(initialI18nStore)};
           window.initialLanguage = "${req.i18n.language}";
         </script>`
 
