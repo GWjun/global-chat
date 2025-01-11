@@ -23,17 +23,17 @@ export default fp(async (fastify) => {
 
   fastify.decorate(
     'authenticate',
-    async (req: FastifyRequest, _reply: FastifyReply) => {
-      try {
-        const authHeader = req.headers.authorization
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-          throw new Error()
-        }
+    async (req: FastifyRequest, reply: FastifyReply) => {
+      const authHeader = req.headers.authorization
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        throw getAPIError('UNAUTHORIZED')
+      }
 
+      try {
         const token = authHeader.substring(7)
         req.user = fastify.jwt.verify(token)
       } catch (err) {
-        throw getAPIError('UNAUTHORIZED')
+        reply.status(403).send()
       }
     },
   )

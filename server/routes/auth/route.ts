@@ -52,7 +52,7 @@ export default async function authRouter(fastify: FastifyInstance) {
           sameSite: 'lax',
           path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
           signed: true,
-          maxAge: 7 * 24 * 60 * 60, // 7 days
+          maxAge: 14 * 24 * 60 * 60, // 14 days
         })
 
         return { user, accessToken }
@@ -95,7 +95,7 @@ export default async function authRouter(fastify: FastifyInstance) {
         sameSite: 'lax',
         path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
         signed: true,
-        maxAge: 7 * 24 * 60 * 60, // 7 days
+        maxAge: 14 * 24 * 60 * 60, // 14 days
       })
 
       return {
@@ -116,20 +116,10 @@ export default async function authRouter(fastify: FastifyInstance) {
 
     if (!userId) {
       reply.clearCookie('refreshToken')
-      throw getAPIError('UNAUTHORIZED')
+      throw getAPIError('SESSION_EXPIRED')
     }
 
-    const { accessToken, refreshToken: newToken } =
-      await tokenService.generateTokens(userId)
-
-    reply.setCookie('refreshToken', newToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: `${BASE_URL}/${END_POINTS.AUTH}/refresh`,
-      signed: true,
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-    })
+    const { accessToken } = await tokenService.generateTokens(userId)
 
     return { accessToken }
   })

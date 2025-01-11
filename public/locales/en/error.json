@@ -1,7 +1,8 @@
 {
   "INTERNAL_SERVER_ERROR": "Something went wrong on the server. \nPlease try again later.",
   "ERROR_CODES_ERROR": "Something went wrong on the server. \nPlease try again later.",
-  "INVALID_REQUEST": "Invalid request.",
+  "INVALID_REQUEST": "The request is invalid.",
   "EMAIL_ALREADY_EXIST": "The email address already exists.",
-  "UNAUTHORIZED": "Please log in to continue."
+  "UNAUTHORIZED": "Please log in to continue.",
+  "SESSION_EXPIRED": "Your login session has expired."
 }

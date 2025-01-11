@@ -46,12 +46,13 @@ export default function Home() {
       </div>
 
       <Button
+        type="button"
         onClick={() => navigate(PATH.login)}
         className="w-full h-12 text-md mb-3"
       >
         {t('login')}
       </Button>
-      <Button variant="secondary" className="w-full h-12 text-md">
+      <Button type="button" variant="secondary" className="w-full h-12 text-md">
         {t('randomChat')}
       </Button>
     </main>

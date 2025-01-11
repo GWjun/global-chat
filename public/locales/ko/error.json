@@ -3,5 +3,6 @@
   "ERROR_CODES_ERROR": "서버에 문제가 생겼어요. \n잠시 후 다시 시도해 주세요.",
   "INVALID_REQUEST": "잘못된 요청입니다.",
   "EMAIL_ALREADY_EXIST": "이미 존재하는 이메일 입니다.",
-  "UNAUTHORIZED": "로그인 후 이용해 주세요."
+  "UNAUTHORIZED": "로그인 후 이용해 주세요.",
+  "SESSION_EXPIRED": "로그인 인증이 만료되었습니다."
 }
