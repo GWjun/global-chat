@@ -9,7 +9,7 @@ import { Label } from '#components/_common/Label'
 import { ErrorMessage } from '#components/_common/ErrorMessage'
 import { PATH } from '#routes.tsx'
 
-import type { RequestRegister } from '#apis/types/auth.ts'
+import type { RegisterDto } from '@dto/auth.ts'
 import { useRegisterMutation } from '#queries/auth/useRegisterMutation'
 
 export default function Register() {
@@ -17,7 +17,7 @@ export default function Register() {
   const navigate = useNavigate()
 
   const { mutate, isPending } = useRegisterMutation()
-  const { formRef, handleSubmit, errors } = useForm<RequestRegister>({
+  const { formRef, handleSubmit, errors } = useForm<RegisterDto>({
     onSubmit: mutate,
     schema: z
       .object({

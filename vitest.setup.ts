@@ -1,10 +1,22 @@
 import '@testing-library/jest-dom/vitest'
+import { afterAll, afterEach, beforeAll, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
-import { afterEach, vi } from 'vitest'
+import { mswServer } from '#__mock__/mswServer'
 
+beforeAll(() => {
+  mswServer.listen({ onUnhandledRequest: 'error' })
+})
 afterEach(() => {
   cleanup()
+  mswServer.resetHandlers()
 })
+afterAll(() => mswServer.close())
+
+afterEach(() => {})
+
+/**
+ * global mock
+ */
 
 vi.mock('zustand')
 

@@ -8,17 +8,18 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 
 1. Clone the repository and install the dependencies
 
-  ```bash
-  pnpm install
-  ```
+```bash
+pnpm install
+```
 
 2. Create a .env file in the root and add the following contents
 
-  ```
-  DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
-  JWT_SECRET=your-jwt-secret
-  COOKIE_SECRET=your-cookie-secret
-  ```
+```
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
+API_URL=localhost:3000/api/v1
+JWT_SECRET=your-jwt-secret
+COOKIE_SECRET=your-cookie-secret
+```
 
 </br>
 
@@ -26,10 +27,10 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 
 1. Start Database
 
-  ```sh
-  pnpm docker:start
-  pnpx prisma generate
-  ```
+```sh
+pnpm docker:start
+pnpx prisma generate
+```
 
 2. Start Application
 
@@ -72,4 +73,3 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 ```
 
 </br>
-
