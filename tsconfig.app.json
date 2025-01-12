@@ -29,5 +29,5 @@
       "@*": ["./server/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "vitest.setup.ts"]
 }
