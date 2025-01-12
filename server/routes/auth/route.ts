@@ -22,7 +22,8 @@ export default async function authRouter(fastify: FastifyInstance) {
       schema: RegisterSchema,
     },
     async (req, reply) => {
-      const { email, password, nickname, language } = req.body
+      const { email, password, confirmPassword, nickname } = req.body
+      const language = req.i18n.language
 
       const { user, accessToken } = await prisma.$transaction(async (tx) => {
         const existingUser = await tx.user.findUnique({
@@ -31,6 +32,10 @@ export default async function authRouter(fastify: FastifyInstance) {
 
         if (existingUser) {
           throw getAPIError('EMAIL_ALREADY_EXIST')
+        }
+
+        if (password !== confirmPassword) {
+          throw getAPIError(`INTERNAL_SERVER_ERROR`)
         }
 
         const hashedPassword = await bcryptjs.hash(password, 10)

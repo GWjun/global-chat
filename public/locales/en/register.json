@@ -1,0 +1,18 @@
+{
+  "title": "Sign Up",
+  "description": "Start AI translation chat now",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "nickname": "Nickname",
+  "submit": "Sign Up",
+  "login": "Log In Again",
+  "schema": {
+    "email": "Please enter a valid email address.",
+    "password": "Password must be at least 4 characters long.",
+    "confirmPassword": "Password confirmation must be at least 4 characters long.",
+    "nickname": "Nickname must be at least 4 characters long.",
+    "passwordMismatch": "Passwords do not match."
+  },
+  "success": "Sign Up completed successfully."
+}

@@ -1,0 +1,18 @@
+{
+  "title": "회원가입",
+  "description": "AI 번역 채팅을 시작하세요",
+  "email": "이메일",
+  "password": "비밀번호",
+  "confirmPassword": "비밀번호 확인",
+  "nickname": "닉네임",
+  "submit": "가입하기",
+  "login": "다시 로그인 하기",
+  "schema": {
+    "email": "유효한 이메일 주소를 입력하세요.",
+    "password": "비밀번호를 4자 이상 입력하세요.",
+    "confirmPassword": "비밀번호 확인을 4자 이상 입력하세요.",
+    "nickname": "닉네임을 4자 이상 입력하세요.",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다"
+  },
+  "success": "회원가입이 완료되었습니다."
+}
