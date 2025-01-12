@@ -1,5 +1,7 @@
-import { http } from 'msw'
 import type { LoginDto, RegisterDto } from '@dto/auth.ts'
+import { http } from 'msw'
+import { BASE_URL, END_POINTS } from '@routes/path.ts'
+
 import { getErrorResponse, mswResponse } from '../mswResponse'
 import { getUsers } from '../fixtures/auth'
 
@@ -8,47 +10,53 @@ interface AuthResponse {
 }
 
 export const authHandlers = [
-  http.post<RegisterDto>('/api/auth/register', async ({ request }) => {
-    const { email } = (await request.json()) as RegisterDto
-    const users = getUsers()
+  http.post<LoginDto>(
+    '${BASE_URL}/${END_POINTS.AUTH}/login',
+    async ({ request }) => {
+      const { email } = (await request.json()) as LoginDto
+      const users = getUsers()
 
-    if (users.some((user) => user.email === email)) {
-      return mswResponse({
-        status: 400,
-        error: getErrorResponse('EMAIL_ALREADY_EXIST'),
+      const user = users.find((user) => user.email === email)
+
+      if (!user) {
+        return mswResponse({
+          status: 401,
+          error: getErrorResponse('UNAUTHORIZED'),
+        })
+      }
+
+      return mswResponse<AuthResponse>({
+        status: 200,
+        body: {
+          accessToken: 'mock-access-token',
+        },
       })
-    }
+    },
+  ),
 
-    return mswResponse<AuthResponse>({
-      status: 200,
-      body: {
-        accessToken: 'mock-access-token',
-      },
-    })
-  }),
+  http.post<RegisterDto>(
+    `${BASE_URL}/${END_POINTS.AUTH}/register`,
+    async ({ request }) => {
+      const { email } = (await request.json()) as RegisterDto
+      const users = getUsers()
 
-  http.post<LoginDto>('/api/auth/login', async ({ request }) => {
-    const { email } = (await request.json()) as LoginDto
-    const users = getUsers()
+      if (users.some((user) => user.email === email)) {
+        return mswResponse({
+          status: 400,
+          error: getErrorResponse('EMAIL_ALREADY_EXIST'),
+        })
+      }
 
-    const user = users.find((user) => user.email === email)
-
-    if (!user) {
-      return mswResponse({
-        status: 401,
-        error: getErrorResponse('UNAUTHORIZED'),
+      return mswResponse<AuthResponse>({
+        status: 200,
+        body: {
+          accessToken: 'mock-access-token',
+        },
       })
-    }
+    },
+  ),
 
-    return mswResponse<AuthResponse>({
-      status: 200,
-      body: {
-        accessToken: 'mock-access-token',
-      },
-    })
-  }),
-
-  http.post('/api/auth/refresh', () => {
+  http.post(`${BASE_URL}/${END_POINTS.AUTH}/refresh`, () => {
     return mswResponse({
       status: 200,
       body: {
@@ -57,7 +65,7 @@ export const authHandlers = [
     })
   }),
 
-  http.post('/api/auth/logout', () => {
+  http.post(`${BASE_URL}/${END_POINTS.AUTH}/logout`, () => {
     return mswResponse({
       status: 200,
       body: {

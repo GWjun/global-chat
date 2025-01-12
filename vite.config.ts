@@ -13,7 +13,8 @@ const vitestConfig = defineVitestConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
-      exclude: ['./server/**'],
+      include: ['src/**'],
+      reporter: 'text',
     },
   },
 })

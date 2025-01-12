@@ -4,7 +4,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import { toast } from '#hooks/use-toast.ts'
+import { toast } from '#hooks/useToast.ts'
 
 const queryClient = new QueryClient({
   defaultOptions: {
