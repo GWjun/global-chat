@@ -8,8 +8,8 @@ export interface LoginDto {
 export interface RegisterDto {
   email: string
   password: string
+  confirmPassword: string
   nickname: string
-  language: string
 }
 
 export const LoginSchema: FastifySchema = {
@@ -26,12 +26,12 @@ export const LoginSchema: FastifySchema = {
 export const RegisterSchema: FastifySchema = {
   body: {
     type: 'object',
-    required: ['email', 'password', 'nickname', 'language'],
+    required: ['email', 'password', 'confirmPassword', 'nickname'],
     properties: {
       email: { type: 'string', format: 'email' },
       password: { type: 'string', minLength: 4 },
+      confirmPassword: { type: 'string', minLength: 4 },
       nickname: { type: 'string', minLength: 4 },
-      language: { type: 'string' },
     },
   },
 }
