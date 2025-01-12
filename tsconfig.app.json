@@ -27,7 +27,8 @@
     "paths": {
       "#*": ["./src/*"],
       "@*": ["./server/*"]
-    }
+    },
+    "types": ["vite/client"]
   },
   "include": ["src", "vitest.setup.ts"]
 }

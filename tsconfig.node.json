@@ -27,6 +27,7 @@
       "#*": ["./src/*"],
       "@*": ["./server/*"]
     },
+    "types": ["vite/client"]
   },
   "include": ["vite.config.ts", "server"]
 }
