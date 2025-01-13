@@ -2,7 +2,12 @@ import { useTranslation } from 'react-i18next'
 import { ChevronRight, Languages } from 'lucide-react'
 import { useOverlay } from '@toss/use-overlay'
 
-import { Drawer, DrawerContent } from '#components/_common/Drawer'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+} from '#components/_common/Drawer'
 import { LANGUAGES } from '#constants/languages.ts'
 
 export default function Profile() {
@@ -13,9 +18,14 @@ export default function Profile() {
     return overlay.open(({ isOpen, close }) => (
       <Drawer open={isOpen} onClose={close}>
         <DrawerContent>
+          <DrawerTitle className="hidden">Languages</DrawerTitle>
+          <DrawerDescription className="hidden">
+            Change languages setting
+          </DrawerDescription>
           <div className="flex flex-col items-center w-full pt-6">
             {LANGUAGES.map((lng) => (
               <button
+                key={lng.code}
                 onClick={() => {
                   i18n.changeLanguageCookie(lng.code)
                   close()

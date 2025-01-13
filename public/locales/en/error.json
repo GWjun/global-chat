@@ -4,5 +4,6 @@
   "INVALID_REQUEST": "The request is invalid.",
   "EMAIL_ALREADY_EXIST": "The email address already exists.",
   "UNAUTHORIZED": "Please log in to continue.",
-  "SESSION_EXPIRED": "Your login session has expired."
+  "SESSION_EXPIRED": "Your login session has expired.",
+  "USER_NOT_FOUND": "User not found."
 }

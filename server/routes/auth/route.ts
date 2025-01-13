@@ -25,7 +25,7 @@ export default async function authRouter(fastify: FastifyInstance) {
       const { email, password, confirmPassword, nickname } = req.body
       const language = req.i18n.language
 
-      const { user, accessToken } = await prisma.$transaction(async (tx) => {
+      const { accessToken } = await prisma.$transaction(async (tx) => {
         const existingUser = await tx.user.findUnique({
           where: { email },
         })
@@ -66,7 +66,6 @@ export default async function authRouter(fastify: FastifyInstance) {
 
       return {
         accessToken,
-        user: { ...user, password: undefined },
       }
     },
   )
@@ -106,7 +105,6 @@ export default async function authRouter(fastify: FastifyInstance) {
 
       return {
         accessToken,
-        user: { ...user, password: undefined },
       }
     },
   )

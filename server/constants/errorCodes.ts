@@ -17,4 +17,7 @@ export const ERROR_CODES = {
   SESSION_EXPIRED: {
     statusCode: 401,
   },
+  USER_NOT_FOUND: {
+    statusCode: 404,
+  },
 }
