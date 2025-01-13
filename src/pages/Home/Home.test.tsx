@@ -1,4 +1,4 @@
-import { describe, test, expect, vi, beforeEach, Mock } from 'vitest'
+import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Home from '.'
@@ -34,7 +34,7 @@ describe('Home 페이지 UI 테스트', () => {
 })
 
 describe('Home 페이지 기능 테스트', () => {
-  let mockNavigate: Mock
+  let mockNavigate: ReturnType<typeof useNavigate>
 
   beforeEach(() => {
     mockNavigate = vi.fn()

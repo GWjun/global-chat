@@ -11,12 +11,14 @@ interface AuthResponse {
 
 export const authHandlers = [
   http.post<LoginDto>(
-    '${BASE_URL}/${END_POINTS.AUTH}/login',
+    `${BASE_URL}/${END_POINTS.AUTH}/login`,
     async ({ request }) => {
-      const { email } = (await request.json()) as LoginDto
+      const { email, password } = (await request.json()) as LoginDto
       const users = getUsers()
 
-      const user = users.find((user) => user.email === email)
+      const user = users.find((user) => {
+        return user.email === email && user.password === password
+      })
 
       if (!user) {
         return mswResponse({

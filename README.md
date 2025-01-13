@@ -16,7 +16,7 @@ pnpm install
 
 ```
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
-JWT_SECRET=your-jwt-secretsfjsdfjdl
+JWT_SECRET=your-jwt-secret
 COOKIE_SECRET=your-cookie-secret
 
 VITE_API_URL=http://localhost:3000/api/v1

@@ -1,6 +1,7 @@
 export interface User {
   id: string
   email: string
+  password: string
   nickname: string
   language: string
 }
@@ -8,8 +9,9 @@ export interface User {
 export const initialUsers: User[] = [
   {
     id: '1',
-    email: 'gwjun@naver.com',
-    nickname: 'gwjun',
+    email: 'test@example.com',
+    password: 'password1234',
+    nickname: 'admin',
     language: 'ko',
   },
 ]

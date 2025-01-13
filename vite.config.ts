@@ -14,6 +14,12 @@ const vitestConfig = defineVitestConfig({
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
       include: ['src/**'],
+      exclude: [
+        'src/__mock__/**',
+        'src/apis/**',
+        'src/components/_common/**',
+        'src/components/lib/**',
+      ],
       reporter: 'text',
     },
   },
