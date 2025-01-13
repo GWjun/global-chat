@@ -14,7 +14,8 @@
     },
     "types": ["vite/client"],
     "typeRoots": [
-      "./server/@types/*"
+      "./server/@types/*",
+      "./src/@types/*"
     ]
   },
 }

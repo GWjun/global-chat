@@ -21,4 +21,15 @@ i18next
     },
   })
 
+i18next.changeLanguageCookie = async function (lng: string) {
+  await i18next.changeLanguage(lng)
+
+  const cookieOptions = [`i18nextLng=${lng}`, 'path=/']
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.push('secure')
+  }
+
+  document.cookie = cookieOptions.join(';')
+}
+
 export default i18next
