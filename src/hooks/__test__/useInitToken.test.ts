@@ -6,8 +6,8 @@ import { useAuthStore } from '#stores/authStore'
 import { BASE_URL, END_POINTS } from '@routes/path.ts'
 
 import { http } from 'msw'
-import { mswServer } from '#__mock__/mswServer.ts'
-import { getErrorResponse, mswResponse } from '#__mock__/mswResponse.ts'
+import { mswServer } from '&/mock/mswServer.ts'
+import { getErrorResponse, mswResponse } from '&/mock/mswResponse.ts'
 
 describe('useInitToken 훅 테스트', () => {
   beforeEach(() => {

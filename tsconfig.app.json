@@ -26,7 +26,9 @@
     "baseUrl": ".",
     "paths": {
       "#*": ["./src/*"],
-      "@*": ["./server/*"]
+      "@*": ["./server/*"],
+      "&/mock*": ["./src/__mock__/*"],
+      "&/test*": ["./src/__test__/*"]
     },
     "types": ["vite/client"]
   },
