@@ -2,7 +2,7 @@ import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
 import App from './App'
 
-import Error from 'src/pages/Error'
+import Error from '#pages/Error'
 import NotFound from '#pages/NotFound'
 import VisitorOutlet from '#components/VisitorOutlet'
 import Layout from '#components/Layout'

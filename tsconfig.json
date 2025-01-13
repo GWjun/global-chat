@@ -12,6 +12,7 @@
       "#*": ["./src/*"],
       "@*": ["./server/*"]
     },
+    "types": ["vite/client"],
     "typeRoots": [
       "./server/@types/*"
     ]

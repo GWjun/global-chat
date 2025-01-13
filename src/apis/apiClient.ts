@@ -1,12 +1,12 @@
 import ky from 'ky'
 import APIError from '#apis/APIError.ts'
 import { useAuthStore } from '#stores/authStore.ts'
-import { BASE_URL, END_POINTS } from '@routes/path.ts'
+import { API_URL, END_POINTS } from '@routes/path.ts'
 
 const { accessToken, setAccessToken, logout } = useAuthStore.getState()
 
 export const baseFetcher = ky.create({
-  prefixUrl: BASE_URL,
+  prefixUrl: API_URL,
   retry: {
     limit: 1,
     statusCodes: [403],
@@ -17,7 +17,7 @@ export const baseFetcher = ky.create({
         const { accessToken } = await ky
           .post<{
             accessToken: string
-          }>(`${BASE_URL}/${END_POINTS.AUTH}/refresh`)
+          }>(`${API_URL}/${END_POINTS.AUTH}/refresh`)
           .json()
 
         setAccessToken(accessToken)

@@ -9,7 +9,7 @@ import { Label } from '#components/_common/Label'
 import { ErrorMessage } from '#components/_common/ErrorMessage'
 import { PATH } from '#routes.tsx'
 
-import type { RequestLogin } from '#apis/types/auth.ts'
+import type { LoginDto } from '@dto/auth.ts'
 import { useLoginMutation } from '#queries/auth/useLoginMutation.ts'
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const { mutate, isPending } = useLoginMutation()
-  const { formRef, handleSubmit, errors } = useForm<RequestLogin>({
+  const { formRef, handleSubmit, errors } = useForm<LoginDto>({
     onSubmit: mutate,
     schema: z.object({
       email: z.string().email(t('schema.email')),

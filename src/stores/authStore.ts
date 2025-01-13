@@ -1,6 +1,6 @@
 import ky from 'ky'
 import { create } from 'zustand/react'
-import { BASE_URL, END_POINTS } from '@routes/path.ts'
+import { API_URL, END_POINTS } from '@routes/path.ts'
 
 interface AuthStore {
   accessToken: string | null
@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       isAuthenticated: token !== null && token !== '',
     }),
   logout: async () => {
-    await ky.post(`${BASE_URL}/${END_POINTS.AUTH}/logout`)
+    await ky.post(`${API_URL}/${END_POINTS.AUTH}/logout`)
 
     set({
       accessToken: null,

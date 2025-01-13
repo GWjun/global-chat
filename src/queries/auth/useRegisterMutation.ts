@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { useMutation } from '@tanstack/react-query'
 import { requestPostRegister } from '#apis/domains/auth.ts'
 
-import { toast } from '#hooks/use-toast.ts'
+import { toast } from '#hooks/useToast.ts'
 import { useAuthStore } from '#stores/authStore.ts'
 import { PATH } from '#routes.tsx'
 
