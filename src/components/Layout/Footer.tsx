@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { MessageCircleMore, User, Users } from 'lucide-react'
 import { cn } from '#components/lib/utils'
 import { PATH } from '#routes.tsx'
@@ -9,6 +10,7 @@ interface FooterProps {
 }
 
 export default function Footer({ pathname }: FooterProps) {
+  const { t } = useTranslation('common')
   const itemClassName = 'flex flex-col items-center gap-1 w-24 text-gray-400'
 
   return (
@@ -29,7 +31,7 @@ export default function Footer({ pathname }: FooterProps) {
               )}
             >
               <Users aria-label="친구 아이콘" />
-              <span>친구</span>
+              <span>{t('footer.friend')}</span>
             </Link>
           </li>
           <li>
@@ -41,7 +43,7 @@ export default function Footer({ pathname }: FooterProps) {
               )}
             >
               <MessageCircleMore aria-label="채팅 아이콘" />
-              <span>채팅</span>
+              <span>{t('footer.chat')}</span>
             </Link>
           </li>
           <li>
@@ -53,7 +55,7 @@ export default function Footer({ pathname }: FooterProps) {
               )}
             >
               <User aria-label="프로필 아이콘" />
-              <span>프로필</span>
+              <span>{t('footer.profile')}</span>
             </Link>
           </li>
         </ul>
