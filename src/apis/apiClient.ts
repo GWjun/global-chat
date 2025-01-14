@@ -3,8 +3,6 @@ import APIError from '#apis/APIError.ts'
 import { useAuthStore } from '#stores/authStore.ts'
 import { API_URL, END_POINTS } from '@routes/path.ts'
 
-const { accessToken, setAccessToken, logout } = useAuthStore.getState()
-
 export const baseFetcher = ky.create({
   prefixUrl: API_URL,
   retry: {
@@ -14,6 +12,8 @@ export const baseFetcher = ky.create({
   hooks: {
     beforeRetry: [
       async () => {
+        const { setAccessToken } = useAuthStore.getState()
+
         const { accessToken } = await ky
           .post<{
             accessToken: string
@@ -25,6 +25,8 @@ export const baseFetcher = ky.create({
     ],
     afterResponse: [
       async (_request, _options, response) => {
+        const { accessToken, logout } = useAuthStore.getState()
+
         if (!response.ok) {
           if (response.status === 401 && accessToken) logout()
           throw (await response.json()) as APIError
@@ -40,6 +42,7 @@ export const authFetcher = baseFetcher.extend({
   hooks: {
     beforeRequest: [
       (req) => {
+        const { accessToken } = useAuthStore.getState()
         if (!accessToken) return
 
         req.headers.set('Authorization', `Bearer ${accessToken}`)

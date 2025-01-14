@@ -5,4 +5,5 @@ export const API_URL =
 export const END_POINTS = {
   AUTH: 'auth',
   CHAT: 'chat',
+  USER: 'user',
 }

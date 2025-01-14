@@ -114,15 +114,15 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       stream.pipe(res)
     },
     onAllReady() {
+      const initialLanguage = req.cookies.i18nextLng ?? req.i18n.language
       const initialI18nStore: Resource = {}
-      req.i18n.languages.forEach((lng) => {
-        initialI18nStore[lng] = req.i18n.services.resourceStore.data[lng]
-      })
+      initialI18nStore[initialLanguage] =
+        req.i18n.services.resourceStore.data[initialLanguage]
 
       const script = `
         <script>
           window.initialI18nStore = ${JSON.stringify(initialI18nStore)};
-          window.initialLanguage = "${req.i18n.language}";
+          window.initialLanguage = "${initialLanguage}";
         </script>`
 
       parts[1] = parts[1].replace('<!--ssr-script-->', script)

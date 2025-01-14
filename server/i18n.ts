@@ -10,7 +10,7 @@ i18next
     // debug: true,
     preload: ['en', 'ko', 'ja', 'zh'],
     fallbackLng: 'en',
-    ns: ['common', 'error', 'home', 'login', 'register'],
+    ns: ['common', 'error', 'home', 'login', 'register', 'profile'],
     defaultNS: 'error',
     backend: {
       loadPath: path.join(__dirname, '../public/locales/{{lng}}/{{ns}}.json'),

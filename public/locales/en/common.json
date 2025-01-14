@@ -6,5 +6,10 @@
   "notfound": {
     "title": "The page you requested could not be found.",
     "action": "Go Back"
+  },
+  "footer": {
+    "friend": "Friend",
+    "chat": "Chat",
+    "profile": "Profile"
   }
 }
