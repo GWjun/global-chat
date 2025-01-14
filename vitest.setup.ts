@@ -20,13 +20,15 @@ afterEach(() => {})
 
 vi.mock('zustand')
 
+export const changeLanguageCookieMock = vi.fn()
 vi.mock('react-i18next', () => ({
   // this mock makes sure any components using the translate hook can use it without a warning being shown
   useTranslation: () => {
     return {
       t: (i18nKey: string) => i18nKey,
       i18n: {
-        changeLanguage: () => new Promise(() => {}),
+        changeLanguage: vi.fn(),
+        changeLanguageCookie: changeLanguageCookieMock,
       },
     }
   },
