@@ -7,4 +7,4 @@ export const LANGUAGES = [
     language: '한국어',
     code: 'ko',
   },
-]
+] as const
