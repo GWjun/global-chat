@@ -1,5 +1,8 @@
 import { defineConfig, mergeConfig } from 'vite'
-import { defineConfig as defineVitestConfig } from 'vitest/config'
+import {
+  defineConfig as defineVitestConfig,
+  coverageConfigDefaults,
+} from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
@@ -15,6 +18,7 @@ const vitestConfig = defineVitestConfig({
     coverage: {
       include: ['src/**'],
       exclude: [
+        ...coverageConfigDefaults.exclude,
         'src/__mock__/**',
         'src/apis/**',
         'src/components/_common/**',
