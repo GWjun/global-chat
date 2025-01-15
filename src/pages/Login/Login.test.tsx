@@ -2,10 +2,11 @@ import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import renderWithProvider from '&/test/util/renderWithProvider.tsx'
-import Login from '.'
 
 import { useNavigate } from 'react-router'
 import { PATH } from '#routes'
+
+import Login from '.'
 
 vi.mock('react-router')
 

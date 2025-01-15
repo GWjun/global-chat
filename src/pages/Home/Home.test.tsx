@@ -1,11 +1,12 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Home from '.'
 
 import { useNavigate } from 'react-router'
 import { useAuthStore } from '#stores/authStore'
 import { PATH } from '#routes'
+
+import Home from '.'
 
 vi.mock('react-router')
 

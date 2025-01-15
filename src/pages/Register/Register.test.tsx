@@ -3,10 +3,11 @@ import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import renderWithProvider from '&/test/util/renderWithProvider.tsx'
 import getErrorCode from '&/test/util/getErrorCode.ts'
-import Register from '.'
 
 import { useNavigate } from 'react-router'
 import { PATH } from '#routes'
+
+import Register from '.'
 
 vi.mock('react-router')
 
