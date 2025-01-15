@@ -11,7 +11,7 @@ export default function Header() {
       )}
     >
       <div className="flex items-center justify-end h-full px-3">
-        <Bell size={26} aria-label="알림 아이콘" />
+        <Bell size={26} aria-label="bell icon" />
       </div>
     </header>
   )

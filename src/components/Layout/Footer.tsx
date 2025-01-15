@@ -29,9 +29,10 @@ export default function Footer({ pathname }: FooterProps) {
                 itemClassName,
                 pathname === PATH.friend && 'text-foreground',
               )}
+              aria-labelledby="friend-label"
             >
-              <Users aria-label="친구 아이콘" />
-              <span>{t('footer.friend')}</span>
+              <Users aria-label={`${t('footer.friend')} icon`} />
+              <span id="friend-label">{t('footer.friend')}</span>
             </Link>
           </li>
           <li>
@@ -41,9 +42,10 @@ export default function Footer({ pathname }: FooterProps) {
                 itemClassName,
                 pathname === PATH.chat && 'text-foreground',
               )}
+              aria-labelledby="chat-label"
             >
-              <MessageCircleMore aria-label="채팅 아이콘" />
-              <span>{t('footer.chat')}</span>
+              <MessageCircleMore aria-label={`${t('footer.chat')} icon`} />
+              <span id="chat-label">{t('footer.chat')}</span>
             </Link>
           </li>
           <li>
@@ -53,9 +55,10 @@ export default function Footer({ pathname }: FooterProps) {
                 itemClassName,
                 pathname === PATH.profile && 'text-foreground',
               )}
+              aria-labelledby="profile-label"
             >
-              <User aria-label="프로필 아이콘" />
-              <span>{t('footer.profile')}</span>
+              <User aria-label={`${t('footer.profile')} icon`} />
+              <span id="profile-label">{t('footer.profile')}</span>
             </Link>
           </li>
         </ul>

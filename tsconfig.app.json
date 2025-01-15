@@ -25,10 +25,10 @@
     /* Alias */
     "baseUrl": ".",
     "paths": {
-      "#*": ["./src/*"],
-      "@*": ["./server/*"],
       "&/mock*": ["./src/__mock__/*"],
-      "&/test*": ["./src/__test__/*"]
+      "&/test*": ["./src/__test__/*"],
+      "#*": ["./src/*"],
+      "@*": ["./server/*"]
     },
     "types": ["vite/client"]
   },
