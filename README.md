@@ -8,30 +8,26 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 
 1. Clone the repository and install the dependencies
 
-```bash
-pnpm install
-```
+   ```bash
+   git clone https://github.com/GWjun/global-chat.git
+   cd global-chat
+   pnpm install
+   ```
 
-2. Create a .env file in the root and add the following contents
+2. Create a .env file
 
-```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
-JWT_SECRET=your-jwt-secret
-COOKIE_SECRET=your-cookie-secret
-
-VITE_API_URL=http://localhost:3000/api/v1
-```
-
-</br>
+   ```bash
+   cp .env.example .env
+   ```
 
 ## Run
 
 1. Start Database
 
-```sh
-pnpm docker:start
-pnpx prisma generate
-```
+   ```sh
+   pnpm docker:start
+   pnpx prisma generate
+   ```
 
 2. Start Application
 
@@ -40,16 +36,6 @@ pnpx prisma generate
   ```bash
   pnpm dev
   ```
-
-  Starts the development server using vite-node.
-
-- **Production Build:**
-
-  ```bash
-  pnpm build
-  ```
-
-  Generates the client and server builds for production.
 
 - **Start Production Server:**
 
