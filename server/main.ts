@@ -114,7 +114,8 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       stream.pipe(res)
     },
     onAllReady() {
-      const initialLanguage = req.cookies.i18nextLng ?? req.i18n.language
+      const initialLanguage =
+        req.cookies.i18nextLng ?? req.i18n.language.slice(0, 2)
       const initialI18nStore: Resource = {}
       initialI18nStore[initialLanguage] =
         req.i18n.services.resourceStore.data[initialLanguage]
