@@ -10,7 +10,7 @@ export default function VisitorOutlet() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(PATH.chat, { replace: true })
+      navigate(PATH.CHAT, { replace: true })
     }
   }, [isAuthenticated, navigate])
 

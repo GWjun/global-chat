@@ -20,7 +20,7 @@ describe('Layout 컴포넌트 테스트', () => {
             />
           </Route>
           <Route
-            path={PATH.login}
+            path={PATH.LOGIN}
             element={<div data-testid="test-login-page" />}
           />
         </Routes>

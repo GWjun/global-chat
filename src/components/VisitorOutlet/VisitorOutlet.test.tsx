@@ -20,7 +20,7 @@ describe('VisitorOutlet 컴포넌트 테스트', () => {
             />
           </Route>
           <Route
-            path={PATH.chat}
+            path={PATH.CHAT}
             element={<div data-testid="test-chat-page" />}
           />
         </Routes>

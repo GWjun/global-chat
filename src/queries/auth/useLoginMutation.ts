@@ -17,7 +17,7 @@ export function useLoginMutation() {
     mutationFn: requestPostLogin,
     onSuccess: (response) => {
       setAccessToken(response.accessToken)
-      navigate(PATH.chat, { replace: true })
+      navigate(PATH.CHAT, { replace: true })
     },
     onError: () => {
       toast({

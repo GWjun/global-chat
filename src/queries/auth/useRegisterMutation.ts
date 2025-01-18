@@ -20,7 +20,7 @@ export function useRegisterMutation() {
         title: t('success'),
       })
       setAccessToken(response.accessToken)
-      navigate(PATH.chat, { replace: true })
+      navigate(PATH.CHAT, { replace: true })
     },
   })
 }

@@ -48,7 +48,7 @@ describe('Login 페이지 기능 테스트', () => {
     await user.click(screen.getByRole('button', { name: 'login' }))
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith(PATH.chat, { replace: true })
+      expect(mockNavigate).toHaveBeenCalledWith(PATH.CHAT, { replace: true })
     })
   })
 
@@ -71,6 +71,6 @@ describe('Login 페이지 기능 테스트', () => {
     renderWithProvider(<Login />)
     await user.click(screen.getByRole('button', { name: 'register' }))
 
-    expect(mockNavigate).toHaveBeenCalledWith(PATH.register)
+    expect(mockNavigate).toHaveBeenCalledWith(PATH.REGISTER)
   })
 })

@@ -71,7 +71,7 @@ export default function Login() {
 
       <Button
         type="button"
-        onClick={() => navigate(PATH.register)}
+        onClick={() => navigate(PATH.REGISTER)}
         variant="secondary"
         className="w-full h-12 text-md"
       >

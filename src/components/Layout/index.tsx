@@ -14,7 +14,7 @@ export default function Layout() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate(PATH.login, { replace: true })
+      navigate(PATH.LOGIN, { replace: true })
     }
   }, [isAuthenticated, navigate])
 
