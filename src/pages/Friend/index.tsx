@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { MessageCircleMore } from 'lucide-react'
+
+import UserCard from '#components/UserCard'
 import { Button } from '#components/_common/Button'
 import { PATH } from '#routes.tsx'
 
@@ -24,21 +26,17 @@ export default function Friend() {
         <p className="text-sub">12명</p>
       </div>
 
-      <div className="flex justify-between items-center w-full mt-4 p-4 bg-background rounded-lg shadow-sm">
-        <div>
-          <span className="font-semibold">gwjun</span>
-          <p className="text-sub">hello world</p>
-        </div>
-
+      <UserCard name="gwjun" message="hello world">
         <Button
           type="button"
           onClick={() => navigate(PATH.chatRoom(1))}
           size="icon"
           className="[&_svg]:size-5"
+          aria-label="Chat Button"
         >
-          <MessageCircleMore className="w-full h-full" />
+          <MessageCircleMore className="w-full h-full" aria-label="Chat Icon" />
         </Button>
-      </div>
+      </UserCard>
     </div>
   )
 }
