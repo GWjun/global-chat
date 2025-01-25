@@ -46,7 +46,12 @@ const FriendFind = () => {
       {searchResults.length > 0 ? (
         <ul className="space-y-3 mt-6">
           {searchResults.map((user) => (
-            <UserCard name={user.nickname} message={user.statusMessage} asChild>
+            <UserCard
+              key={user.id}
+              name={user.nickname}
+              message={user.statusMessage}
+              asChild
+            >
               <li>
                 <Button type="button" size="icon" className="[&_svg]:size-5">
                   <Plus className="w-full h-full" />
