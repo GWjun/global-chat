@@ -15,19 +15,26 @@ import Register from '#pages/Register'
 import Chat from '#pages/Chat'
 import Friend from '#pages/Friend'
 import Profile from '#pages/Profile'
+import FriendFind from '#pages/FriendFind'
 
 export const PATH = {
-  home: '/',
-  login: '/login',
-  register: '/register',
-  chat: '/chat',
-  friend: '/friend',
-  profile: '/profile',
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+
+  CHAT: '/chat',
+  CHATROOM: '/chat/:roomId',
+  chatRoom: (roomId: number) => `/chat/${roomId}`,
+
+  FRIEND: '/friend',
+  FRIEND_FIND: '/friend/find',
+
+  PROFILE: '/profile',
 }
 
 const routes: RouteObject[] = [
   {
-    path: PATH.home,
+    path: PATH.HOME,
     element: (
       <Suspense>
         <App />
@@ -47,11 +54,11 @@ const routes: RouteObject[] = [
             element: <VisitorOutlet />,
             children: [
               {
-                path: PATH.login,
+                path: PATH.LOGIN,
                 element: <Login />,
               },
               {
-                path: PATH.register,
+                path: PATH.REGISTER,
                 element: <Register />,
               },
             ],
@@ -60,15 +67,19 @@ const routes: RouteObject[] = [
             element: <Layout />,
             children: [
               {
-                path: PATH.chat,
+                path: PATH.CHAT,
                 element: <Chat />,
               },
               {
-                path: PATH.friend,
+                path: PATH.FRIEND,
                 element: <Friend />,
               },
               {
-                path: PATH.profile,
+                path: PATH.FRIEND_FIND,
+                element: <FriendFind />,
+              },
+              {
+                path: PATH.PROFILE,
                 element: <Profile />,
               },
             ],

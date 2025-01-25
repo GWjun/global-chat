@@ -15,7 +15,7 @@ describe('Footer 컴포넌트 테스트', () => {
   }
 
   it('친구, 채팅, 프로필 링크가 올바르게 렌더링된다', () => {
-    setup(PATH.chat)
+    setup(PATH.CHAT)
 
     expect(
       screen.getByRole('link', { name: 'footer.friend' }),
@@ -29,7 +29,7 @@ describe('Footer 컴포넌트 테스트', () => {
   })
 
   it('현재 경로에 따라 활성 링크 스타일이 적용된다', () => {
-    const { container } = setup(PATH.friend)
+    const { container } = setup(PATH.FRIEND)
 
     const activeLink = container.querySelector('a[href="/friend"]')
 

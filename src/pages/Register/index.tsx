@@ -103,7 +103,7 @@ export default function Register() {
 
       <Button
         type="button"
-        onClick={() => navigate(PATH.login)}
+        onClick={() => navigate(PATH.LOGIN)}
         variant="secondary"
         className="w-full h-12 text-md"
       >

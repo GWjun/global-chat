@@ -59,7 +59,7 @@ describe('Register 페이지 기능 테스트', () => {
 
     await waitFor(() => {
       expect(screen.getByText('success')).toBeInTheDocument()
-      expect(mockNavigate).toHaveBeenCalledWith(PATH.chat, { replace: true })
+      expect(mockNavigate).toHaveBeenCalledWith(PATH.CHAT, { replace: true })
     })
   })
 

@@ -24,10 +24,10 @@ export default function Footer({ pathname }: FooterProps) {
         <ul className="flex justify-evenly items-center h-full">
           <li>
             <Link
-              to={PATH.friend}
+              to={PATH.FRIEND}
               className={cn(
                 itemClassName,
-                pathname === PATH.friend && 'text-foreground',
+                pathname === PATH.FRIEND && 'text-foreground',
               )}
               aria-labelledby="friend-label"
             >
@@ -37,10 +37,10 @@ export default function Footer({ pathname }: FooterProps) {
           </li>
           <li>
             <Link
-              to={PATH.chat}
+              to={PATH.CHAT}
               className={cn(
                 itemClassName,
-                pathname === PATH.chat && 'text-foreground',
+                pathname === PATH.CHAT && 'text-foreground',
               )}
               aria-labelledby="chat-label"
             >
@@ -50,10 +50,10 @@ export default function Footer({ pathname }: FooterProps) {
           </li>
           <li>
             <Link
-              to={PATH.profile}
+              to={PATH.PROFILE}
               className={cn(
                 itemClassName,
-                pathname === PATH.profile && 'text-foreground',
+                pathname === PATH.PROFILE && 'text-foreground',
               )}
               aria-labelledby="profile-label"
             >

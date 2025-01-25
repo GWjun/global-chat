@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(PATH.chat, { replace: true })
+      navigate(PATH.CHAT, { replace: true })
     }
   }, [isAuthenticated, navigate])
 
@@ -57,7 +57,7 @@ export default function Home() {
 
       <Button
         type="button"
-        onClick={() => navigate(PATH.login)}
+        onClick={() => navigate(PATH.LOGIN)}
         className="w-full h-12 text-md mb-3"
       >
         {t('login')}
