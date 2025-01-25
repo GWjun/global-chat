@@ -7,12 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FriendRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum NotificationType {
+  FRIEND_REQUEST
+  FRIEND_REQUEST_ACCEPTED
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
   password     String
   nickname     String
   language     String
+  statusMessage String? @db.VarChar(100)
   profileImage String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -21,6 +33,36 @@ model User {
   messages              Message[]
   sentNotifications     Notification[] @relation("SentNotifications")
   receivedNotifications Notification[] @relation("ReceivedNotifications")
+  sentFriendRequests     FriendRequest[] @relation("SentFriendRequests")
+  receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
+  friends       Friend[] @relation("UserFriends")
+  friendOf      Friend[] @relation("FriendUsers")
+}
+
+model FriendRequest {
+  id          String            @id @default(uuid())
+  senderId    String
+  receiverId  String
+  status      FriendRequestStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  sender    User @relation("SentFriendRequests", fields: [senderId], references: [id])
+  receiver  User @relation("ReceivedFriendRequests", fields: [receiverId], references: [id])
+
+  @@unique([senderId, receiverId])
+}
+
+model Friend {
+  id          String   @id @default(uuid())
+  userId      String
+  friendId    String
+  createdAt   DateTime @default(now())
+
+  user    User @relation("UserFriends", fields: [userId], references: [id])
+  friend  User @relation("FriendUsers", fields: [friendId], references: [id])
+
+  @@unique([userId, friendId])
 }
 
 model ChatRoom {
@@ -77,7 +119,7 @@ model Notification {
   id         String   @id @default(uuid())
   senderId   String
   receiverId String
-  type       String
+  type       NotificationType
   content    String
   isRead     Boolean  @default(false)
   createdAt  DateTime @default(now())
