@@ -9,6 +9,7 @@ import {
   FriendDeleteSchema,
 } from '@dto/friend'
 import { FriendService } from '@services/friend'
+import { getAPIError } from '@utils/getAPIError'
 
 export default async function friendRouter(fastify: FastifyInstance) {
   const friendService = new FriendService()
@@ -56,6 +57,11 @@ export default async function friendRouter(fastify: FastifyInstance) {
     async (req, reply) => {
       const userId = req.user.id
       const requestData = req.body
+
+      if (userId === requestData.friendId) {
+        getAPIError('INVALID_REQUEST')
+      }
+
       const result = await friendService.requestFriend(userId, requestData)
 
       return reply.send(result)

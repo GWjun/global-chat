@@ -37,6 +37,33 @@ export class FriendService {
   }
 
   async requestFriend(userId: string, data: FriendRequestDto) {
+    const existingRequest = await prisma.friendRequest.findFirst({
+      where: {
+        OR: [
+          { senderId: userId, receiverId: data.friendId },
+          { senderId: data.friendId, receiverId: userId },
+        ],
+        status: 'PENDING',
+      },
+    })
+
+    if (existingRequest) {
+      throw getAPIError('FRIEND_REQUEST_ALREADY_EXISTS')
+    }
+
+    const existingFriend = await prisma.friend.findFirst({
+      where: {
+        OR: [
+          { userId, friendId: data.friendId },
+          { userId: data.friendId, friendId: userId },
+        ],
+      },
+    })
+
+    if (existingFriend) {
+      throw getAPIError('ALREADY_FRIENDS')
+    }
+
     const result = await prisma.friendRequest.create({
       data: {
         senderId: userId,
@@ -69,26 +96,30 @@ export class FriendService {
       throw getAPIError('INVALID_REQUEST')
     }
 
-    if (status === 'ACCEPTED') {
-      await prisma.friend.create({
-        data: {
-          userId: friendRequest.senderId,
-          friendId: friendRequest.receiverId,
+    const result = await prisma.$transaction(async (tx) => {
+      if (status === 'ACCEPTED') {
+        await tx.friend.create({
+          data: {
+            userId: friendRequest.senderId,
+            friendId: friendRequest.receiverId,
+          },
+        })
+      }
+
+      await tx.friendRequest.delete({
+        where: {
+          id: requestId,
         },
       })
-    }
 
-    await prisma.friendRequest.delete({
-      where: {
-        id: requestId,
-      },
+      return {
+        status,
+        createdAt: friendRequest.createdAt.toISOString(),
+        updatedAt: friendRequest.updatedAt.toISOString(),
+      }
     })
 
-    return {
-      status,
-      createdAt: friendRequest.createdAt.toISOString(),
-      updatedAt: friendRequest.updatedAt.toISOString(),
-    }
+    return result
   }
 
   async deleteFriend(userId: string, friendId: string) {

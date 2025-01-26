@@ -17,7 +17,7 @@ export const FriendSearchSchema: FastifySchema = {
     type: 'object',
     required: ['nickname'],
     properties: {
-      nickname: { type: 'string', minLength: 1 },
+      nickname: { type: 'string', minLength: 2 },
     },
   },
 }
