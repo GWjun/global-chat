@@ -37,6 +37,8 @@ model User {
   receivedFriendRequests FriendRequest[] @relation("ReceivedFriendRequests")
   friends       Friend[] @relation("UserFriends")
   friendOf      Friend[] @relation("FriendUsers")
+
+  @@index([createdAt], name: "user_createdAt_idx")
 }
 
 model FriendRequest {
@@ -47,8 +49,8 @@ model FriendRequest {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 
-  sender    User @relation("SentFriendRequests", fields: [senderId], references: [id])
-  receiver  User @relation("ReceivedFriendRequests", fields: [receiverId], references: [id])
+  sender    User @relation("SentFriendRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver  User @relation("ReceivedFriendRequests", fields: [receiverId], references: [id], onDelete: Cascade)
 
   @@unique([senderId, receiverId])
 }
@@ -59,8 +61,8 @@ model Friend {
   friendId    String
   createdAt   DateTime @default(now())
 
-  user    User @relation("UserFriends", fields: [userId], references: [id])
-  friend  User @relation("FriendUsers", fields: [friendId], references: [id])
+  user    User @relation("UserFriends", fields: [userId], references: [id], onDelete: Cascade)
+  friend  User @relation("FriendUsers", fields: [friendId], references: [id], onDelete: Cascade)
 
   @@unique([userId, friendId])
 }
@@ -73,7 +75,6 @@ model ChatRoom {
 
   users        ChatRoomUser[]
   messages     Message[]
-  translations MessageTranslation[]
 }
 
 model ChatRoomUser {
@@ -82,8 +83,8 @@ model ChatRoomUser {
   chatRoomId String
   joinedAt   DateTime @default(now())
 
-  user     User     @relation(fields: [userId], references: [id])
-  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
 
   @@unique([userId, chatRoomId])
 }
@@ -96,21 +97,21 @@ model Message {
   language   String
   createdAt  DateTime @default(now())
 
-  user         User                 @relation(fields: [userId], references: [id])
-  chatRoom     ChatRoom             @relation(fields: [chatRoomId], references: [id])
+  user         User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatRoom     ChatRoom             @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
   translations MessageTranslation[]
+
+  @@index([chatRoomId, createdAt], name: "message_room_created_idx")
 }
 
 model MessageTranslation {
   id         String   @id @default(uuid())
   messageId  String
-  chatRoomId String
   language   String
   content    String
   createdAt  DateTime @default(now())
 
-  message  Message  @relation(fields: [messageId], references: [id])
-  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id])
+  message  Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
 
   @@unique([messageId, language])
 }
@@ -124,6 +125,6 @@ model Notification {
   isRead     Boolean  @default(false)
   createdAt  DateTime @default(now())
 
-  sender   User @relation("SentNotifications", fields: [senderId], references: [id])
-  receiver User @relation("ReceivedNotifications", fields: [receiverId], references: [id])
+  sender   User @relation("SentNotifications", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedNotifications", fields: [receiverId], references: [id], onDelete: Cascade)
 }

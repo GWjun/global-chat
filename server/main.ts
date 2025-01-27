@@ -88,7 +88,7 @@ server.setErrorHandler((error, req, reply) => {
     reply.status(429).send({
       statusCode: 429,
       errorCode: 'TOO_MANY_REQUEST',
-      message: req.i18n.t(''),
+      message: req.i18n.t('TOO_MANY_REQUEST'),
     })
   } else if (error instanceof APIError) {
     reply.status(error.statusCode).send({
