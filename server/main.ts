@@ -28,18 +28,18 @@ const server = Fastify({
   },
 })
 
-server.register(cors, {
+await server.register(cors, {
   origin: 'http://localhost:3000',
   credentials: true,
 })
 
-server.register(rateLimit, {
+await server.register(rateLimit, {
   global: true,
   max: 100,
   timeWindow: '1 minute',
 })
 
-server.register(plugin, { i18next })
+await server.register(plugin, { i18next })
 
 // vite config
 let vite: ViteDevServer | undefined

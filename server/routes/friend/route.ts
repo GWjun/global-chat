@@ -1,5 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import {
+  FriendListQuery,
+  FriendListSchema,
   FriendSearchQuery,
   FriendSearchSchema,
   FriendRequestDto,
@@ -15,14 +17,20 @@ export default async function friendRouter(fastify: FastifyInstance) {
   const friendService = new FriendService()
 
   // Get friend list by userId
-  fastify.get(
+  fastify.get<{ Querystring: FriendListQuery }>(
     '/list',
     {
       onRequest: fastify.authenticate,
+      schema: FriendListSchema,
     },
     async (req, reply) => {
       const userId = req.user.id
-      const friends = await friendService.getFriendList(userId)
+      const { cursor, pageSize } = req.query
+      const friends = await friendService.getFriendList(
+        userId,
+        cursor,
+        pageSize,
+      )
 
       return reply.send(friends)
     },
@@ -37,10 +45,12 @@ export default async function friendRouter(fastify: FastifyInstance) {
     },
     async (req, reply) => {
       const userId = req.user.id
-      const { nickname } = req.query
+      const { nickname, cursor, pageSize } = req.query
       const results = await friendService.searchFriendsByNickname(
         userId,
         nickname,
+        cursor,
+        pageSize,
       )
 
       return reply.send(results)

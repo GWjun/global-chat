@@ -1,7 +1,14 @@
 import type { FastifySchema } from 'fastify'
 
+export interface FriendListQuery {
+  cursor?: string
+  pageSize?: number
+}
+
 export interface FriendSearchQuery {
   nickname: string
+  cursor?: string
+  pageSize?: number
 }
 
 export interface FriendRequestDto {
@@ -12,12 +19,30 @@ export interface FriendStatusDto {
   status: 'ACCEPTED' | 'REJECTED'
 }
 
+export const FriendListSchema: FastifySchema = {
+  querystring: {
+    type: 'object',
+    properties: {
+      cursor: { type: 'string' },
+      pageSize: {
+        type: 'number',
+        default: 10,
+      },
+    },
+  },
+}
+
 export const FriendSearchSchema: FastifySchema = {
   querystring: {
     type: 'object',
     required: ['nickname'],
     properties: {
       nickname: { type: 'string', minLength: 2 },
+      cursor: { type: 'string' },
+      pageSize: {
+        type: 'number',
+        default: 10,
+      },
     },
   },
 }

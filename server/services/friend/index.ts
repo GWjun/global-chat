@@ -3,75 +3,104 @@ import { FriendRequestDto } from '@dto/friend'
 import { getAPIError } from '@utils/getAPIError'
 
 export class FriendService {
-  async getFriendList(userId: string) {
-    return prisma.friend
-      .findMany({
-        where: {
-          OR: [{ userId }, { friendId: userId }],
-        },
-        include: {
-          user: true,
-          friend: true,
-        },
-      })
-      .then((friends) =>
-        friends.map((friend) => ({
-          id: friend.userId === userId ? friend.friendId : friend.userId,
-          nickname:
-            friend.userId === userId
-              ? friend.friend.nickname
-              : friend.user.nickname,
-          profileImage:
-            friend.userId === userId
-              ? friend.friend.profileImage
-              : friend.user.profileImage,
-        })),
-      )
+  async getFriendList(userId: string, cursor?: string, pageSize: number = 10) {
+    const friends = await prisma.friend.findMany({
+      where: {
+        OR: [{ userId }, { friendId: userId }],
+      },
+      include: {
+        user: true,
+        friend: true,
+      },
+      take: pageSize + 1,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: {
+        id: 'asc',
+      },
+    })
+
+    const hasNextPage = friends.length > pageSize
+    const filteredFriends = hasNextPage ? friends.slice(0, -1) : friends
+
+    const mappedFriends = filteredFriends.map((friend) => ({
+      id: friend.userId === userId ? friend.friendId : friend.userId,
+      nickname:
+        friend.userId === userId
+          ? friend.friend.nickname
+          : friend.user.nickname,
+      profileImage:
+        friend.userId === userId
+          ? friend.friend.profileImage
+          : friend.user.profileImage,
+    }))
+
+    return {
+      friends: mappedFriends,
+      hasNextPage,
+      nextCursor: hasNextPage ? friends[friends.length - 1].id : null,
+    }
   }
 
-  async searchFriendsByNickname(userId: string, nickname: string) {
-    return prisma.friend
-      .findMany({
-        where: {
-          OR: [
-            {
-              userId,
-              friend: {
-                nickname: {
-                  contains: nickname,
-                  mode: 'insensitive',
-                },
+  async searchFriendsByNickname(
+    userId: string,
+    nickname: string,
+    cursor?: string,
+    pageSize: number = 10,
+  ) {
+    const friends = await prisma.friend.findMany({
+      where: {
+        OR: [
+          {
+            userId,
+            friend: {
+              nickname: {
+                contains: nickname,
+                mode: 'insensitive',
               },
             },
-            {
-              friendId: userId,
-              user: {
-                nickname: {
-                  contains: nickname,
-                  mode: 'insensitive',
-                },
+          },
+          {
+            friendId: userId,
+            user: {
+              nickname: {
+                contains: nickname,
+                mode: 'insensitive',
               },
             },
-          ],
-        },
-        include: {
-          user: true,
-          friend: true,
-        },
-      })
-      .then((friends) =>
-        friends.map((friend) => ({
-          id: friend.userId === userId ? friend.friendId : friend.userId,
-          nickname:
-            friend.userId === userId
-              ? friend.friend.nickname
-              : friend.user.nickname,
-          profileImage:
-            friend.userId === userId
-              ? friend.friend.profileImage
-              : friend.user.profileImage,
-        })),
-      )
+          },
+        ],
+      },
+      include: {
+        user: true,
+        friend: true,
+      },
+      take: pageSize + 1,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy: {
+        id: 'asc',
+      },
+    })
+
+    const hasNextPage = friends.length > pageSize
+    const filteredFriends = hasNextPage ? friends.slice(0, -1) : friends
+
+    const mappedFriends = filteredFriends.map((friend) => ({
+      id: friend.userId === userId ? friend.friendId : friend.userId,
+      nickname:
+        friend.userId === userId
+          ? friend.friend.nickname
+          : friend.user.nickname,
+      profileImage:
+        friend.userId === userId
+          ? friend.friend.profileImage
+          : friend.user.profileImage,
+    }))
+
+    return {
+      friends: mappedFriends,
+      hasNextPage,
+      nextCursor: hasNextPage ? friends[friends.length - 1].id : null,
+    }
   }
 
   async requestFriend(userId: string, data: FriendRequestDto) {
