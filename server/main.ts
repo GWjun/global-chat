@@ -4,6 +4,7 @@ import type { ViteDevServer } from 'vite'
 import path from 'path'
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
+import rateLimit from '@fastify/rate-limit'
 import fastifyStatic from '@fastify/static'
 import fastifyCompress from '@fastify/compress'
 
@@ -27,12 +28,18 @@ const server = Fastify({
   },
 })
 
-server.register(cors, {
+await server.register(cors, {
   origin: 'http://localhost:3000',
   credentials: true,
 })
 
-server.register(plugin, { i18next })
+await server.register(rateLimit, {
+  global: true,
+  max: 100,
+  timeWindow: '1 minute',
+})
+
+await server.register(plugin, { i18next })
 
 // vite config
 let vite: ViteDevServer | undefined
@@ -76,6 +83,12 @@ server.setErrorHandler((error, req, reply) => {
       statusCode: 400,
       errorCode: 'INVALID_REQUEST',
       message: req.i18n.t('INVALID_REQUEST'),
+    })
+  } else if (error.statusCode === 429) {
+    reply.status(429).send({
+      statusCode: 429,
+      errorCode: 'TOO_MANY_REQUEST',
+      message: req.i18n.t('TOO_MANY_REQUEST'),
     })
   } else if (error instanceof APIError) {
     reply.status(error.statusCode).send({
@@ -139,9 +152,17 @@ server.get('/', async (req, reply) => {
 })
 
 // default route
-server.setNotFoundHandler(async (req, reply) => {
-  await handleSSR(req, reply)
-})
+server.setNotFoundHandler(
+  {
+    preHandler: server.rateLimit({
+      max: 4,
+      timeWindow: 500,
+    }),
+  },
+  async (req, reply) => {
+    await handleSSR(req, reply)
+  },
+)
 
 await server.ready()
 await server.listen({ port: 3000 })

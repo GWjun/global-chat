@@ -20,4 +20,15 @@ export const ERROR_CODES = {
   USER_NOT_FOUND: {
     statusCode: 404,
   },
+  TOO_MANY_REQUEST: {
+    statusCode: 429,
+  },
+
+  // Friend
+  FRIEND_REQUEST_ALREADY_EXISTS: {
+    statusCode: 400,
+  },
+  ALREADY_FRIENDS: {
+    statusCode: 400,
+  },
 } as const
