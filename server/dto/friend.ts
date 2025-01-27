@@ -26,6 +26,7 @@ export const FriendListSchema: FastifySchema = {
       cursor: { type: 'string' },
       pageSize: {
         type: 'number',
+        maximum: 50,
         default: 10,
       },
     },
@@ -41,6 +42,7 @@ export const FriendSearchSchema: FastifySchema = {
       cursor: { type: 'string' },
       pageSize: {
         type: 'number',
+        maximum: 50,
         default: 10,
       },
     },

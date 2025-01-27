@@ -104,6 +104,14 @@ export class FriendService {
   }
 
   async requestFriend(userId: string, data: FriendRequestDto) {
+    const receiver = await prisma.user.findUnique({
+      where: { id: data.friendId },
+    })
+
+    if (!receiver) {
+      throw getAPIError('INVALID_REQUEST')
+    }
+
     const existingRequest = await prisma.friendRequest.findFirst({
       where: {
         OR: [
@@ -131,12 +139,33 @@ export class FriendService {
       throw getAPIError('ALREADY_FRIENDS')
     }
 
-    const result = await prisma.friendRequest.create({
-      data: {
-        senderId: userId,
-        receiverId: data.friendId,
-        status: 'PENDING',
-      },
+    const result = await prisma.$transaction(async (tx) => {
+      const friendRequest = await tx.friendRequest.create({
+        data: {
+          senderId: userId,
+          receiverId: data.friendId,
+          status: 'PENDING',
+        },
+      })
+
+      const sender = await tx.user.findUnique({
+        where: { id: userId },
+        select: { nickname: true },
+      })
+
+      if (!sender) {
+        throw getAPIError('INVALID_REQUEST')
+      }
+
+      await tx.notification.create({
+        data: {
+          senderId: userId,
+          receiverId: data.friendId,
+          type: 'FRIEND_REQUEST',
+        },
+      })
+
+      return friendRequest
     })
 
     return {
@@ -178,6 +207,34 @@ export class FriendService {
           id: requestId,
         },
       })
+
+      await tx.notification.deleteMany({
+        where: {
+          senderId: friendRequest.senderId,
+          receiverId: friendRequest.receiverId,
+          type: 'FRIEND_REQUEST',
+        },
+      })
+
+      // add new notification
+      if (status === 'ACCEPTED') {
+        const responder = await tx.user.findUnique({
+          where: { id: userId },
+          select: { nickname: true },
+        })
+
+        if (!responder) {
+          throw getAPIError('INVALID_REQUEST')
+        }
+
+        await tx.notification.create({
+          data: {
+            senderId: userId,
+            receiverId: friendRequest.senderId,
+            type: 'FRIEND_REQUEST_ACCEPTED',
+          },
+        })
+      }
 
       return {
         status,
