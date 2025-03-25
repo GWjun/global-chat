@@ -18,6 +18,7 @@ import APIError from '#apis/APIError.ts'
 import type { Resource } from 'i18next'
 import { plugin } from 'i18next-http-middleware'
 import i18next from './i18n'
+import { getNameSpace } from '@utils/getNameSpace.ts'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -147,8 +148,16 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       const initialLanguage =
         req.cookies.i18nextLng ?? req.i18n.language.slice(0, 2)
       const initialI18nStore: Resource = {}
-      initialI18nStore[initialLanguage] =
-        req.i18n.services.resourceStore.data[initialLanguage]
+      initialI18nStore[initialLanguage] = {}
+
+      const requiredNamespaces = getNameSpace(req.url)
+
+      requiredNamespaces.forEach((ns) => {
+        if (req.i18n.services.resourceStore.data[initialLanguage]?.[ns]) {
+          initialI18nStore[initialLanguage][ns] =
+            req.i18n.services.resourceStore.data[initialLanguage][ns]
+        }
+      })
 
       const script = `
         <script>
