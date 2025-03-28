@@ -3,17 +3,17 @@ import { act, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 
 import { useAuthStore } from '#stores/authStore'
-import { PATH } from '#routes.tsx'
 
-import Layout from './index'
+import UserLayout from './UserLayout.tsx'
+import { PATH } from '#routes/path.ts'
 
-describe('Layout 컴포넌트 테스트', () => {
+describe('UserLayout 컴포넌트 테스트', () => {
   beforeEach(() => {
     useAuthStore.setState({ isAuthenticated: true })
     render(
       <MemoryRouter initialEntries={['/chat']}>
         <Routes>
-          <Route element={<Layout />}>
+          <Route element={<UserLayout />}>
             <Route
               path={'/chat'}
               element={<div data-testid="test-chat-page" />}

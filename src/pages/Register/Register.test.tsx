@@ -5,9 +5,9 @@ import renderWithProvider from '&/test/util/renderWithProvider.tsx'
 import getErrorCode from '&/test/util/getErrorCode.ts'
 
 import { useNavigate } from 'react-router'
-import { PATH } from '#routes'
 
 import Register from '.'
+import { PATH } from '#routes/path.ts'
 
 vi.mock('react-router')
 

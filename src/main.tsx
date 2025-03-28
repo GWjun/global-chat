@@ -3,7 +3,7 @@ import { hydrateRoot } from 'react-dom/client'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { useSSR } from 'react-i18next'
-import routes from './routes.tsx'
+import routes from './routes/routes.tsx'
 
 import type { Resource } from 'i18next'
 import './i18n.ts'

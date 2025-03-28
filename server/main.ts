@@ -10,6 +10,7 @@ import fastifyCompress from '@fastify/compress'
 
 import { createServer } from 'vite'
 import { createFetchRequest, loadRender, loadTemplate } from '@utils/ssr.ts'
+import { authSSRMiddleware } from '@middlewares/authSSRMiddleware.ts'
 import plugins from '@plugins'
 import routes from '@routes'
 import APIError from '#apis/APIError.ts'
@@ -40,6 +41,21 @@ await server.register(rateLimit, {
 })
 
 await server.register(plugin, { i18next })
+
+// authentication middleware only to HTML requests
+server.addHook('preHandler', async (req, reply) => {
+  const url = req.url
+  const acceptHeader = req.headers.accept || ''
+  const isHtmlRequest = acceptHeader.includes('text/html')
+
+  if (isHtmlRequest && !url.startsWith('/api/')) {
+    return new Promise<void>((resolve) => {
+      authSSRMiddleware(req, reply, () => {
+        resolve()
+      })
+    })
+  }
+})
 
 // vite config
 let vite: ViteDevServer | undefined
@@ -152,17 +168,9 @@ server.get('/', async (req, reply) => {
 })
 
 // default route
-server.setNotFoundHandler(
-  {
-    preHandler: server.rateLimit({
-      max: 4,
-      timeWindow: 500,
-    }),
-  },
-  async (req, reply) => {
-    await handleSSR(req, reply)
-  },
-)
+server.setNotFoundHandler(async (req, reply) => {
+  await handleSSR(req, reply)
+})
 
 await server.ready()
 await server.listen({ port: 3000 })

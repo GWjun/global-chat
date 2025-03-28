@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
-import { PATH } from '#routes.tsx'
 
 import Footer from './Footer'
+import { PATH } from '#routes/path.ts'
 
 describe('Footer 컴포넌트 테스트', () => {
   const setup = (pathname: string) => {

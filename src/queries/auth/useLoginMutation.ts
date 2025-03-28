@@ -6,7 +6,8 @@ import { requestPostLogin } from '#apis/domains/auth.ts'
 
 import { toast } from '#hooks/useToast.ts'
 import { useAuthStore } from '#stores/authStore.ts'
-import { PATH } from '#routes.tsx'
+
+import { PATH } from '#routes/path.ts'
 
 export function useLoginMutation() {
   const { t } = useTranslation('login')

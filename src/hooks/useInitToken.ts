@@ -1,9 +1,8 @@
 import { useAuthStore } from '#stores/authStore.ts'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { requestPostRefresh } from '#apis/domains/auth.ts'
 
-export default function useInitToken() {
-  const [isPending, setIsPending] = useState(true)
+export function useInitToken() {
   const setAccessToken = useAuthStore((state) => state.setAccessToken)
 
   useEffect(() => {
@@ -14,11 +13,10 @@ export default function useInitToken() {
       } catch {
         /* empty */
       }
-      setIsPending(false)
     }
 
+    // noinspection JSIgnoredPromiseFromCall
     initialize()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  return { isPending }
 }

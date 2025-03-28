@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import useInitToken from '../useInitToken'
+import { useInitToken } from '../useInitToken'
 
 import { useAuthStore } from '#stores/authStore'
 import { BASE_URL, END_POINTS } from '@routes/path.ts'

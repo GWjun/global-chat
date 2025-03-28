@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event'
 
 import { useNavigate } from 'react-router'
 import { useAuthStore } from '#stores/authStore'
-import { PATH } from '#routes'
 
 import Home from '.'
+import { PATH } from '#routes/path.ts'
 
 vi.mock('react-router')
 

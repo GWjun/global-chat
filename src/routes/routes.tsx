@@ -1,11 +1,11 @@
 import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
-import App from './App'
+import App from '../App.tsx'
 
 import Error from '#pages/Error'
 import NotFound from '#pages/NotFound'
-import VisitorOutlet from '#components/VisitorOutlet'
-import Layout from '#components/Layout'
+import VisitorLayout from '#components/layout/VisitorLayout.tsx'
+import UserLayout from '#components/layout/UserLayout.tsx'
 
 // don't need to lazy loading
 import Home from '#pages/Home'
@@ -17,20 +17,7 @@ import Friend from '#pages/Friend'
 import Profile from '#pages/Profile'
 import FriendFind from '#pages/FriendFind'
 
-export const PATH = {
-  HOME: '/',
-  LOGIN: '/login',
-  REGISTER: '/register',
-
-  CHAT: '/chat',
-  CHATROOM: '/chat/:roomId',
-  chatRoom: (roomId: number) => `/chat/${roomId}`,
-
-  FRIEND: '/friend',
-  FRIEND_FIND: '/friend/find',
-
-  PROFILE: '/profile',
-}
+import { PATH } from '#routes/path.ts'
 
 const routes: RouteObject[] = [
   {
@@ -51,7 +38,7 @@ const routes: RouteObject[] = [
         errorElement: <Error />,
         children: [
           {
-            element: <VisitorOutlet />,
+            element: <VisitorLayout />,
             children: [
               {
                 path: PATH.LOGIN,
@@ -64,7 +51,7 @@ const routes: RouteObject[] = [
             ],
           },
           {
-            element: <Layout />,
+            element: <UserLayout />,
             children: [
               {
                 path: PATH.CHAT,

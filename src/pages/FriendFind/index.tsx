@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { Plus } from 'lucide-react'
 import { useDebouncedInputValue } from '@modern-kit/react/hooks/useDebouncedInputValue'
 
-import UserCard from '#components/UserCard'
-import UserCardSkeleton from '#components/UserCard/UserCard.skeleton.tsx'
+import UserCard from 'src/components/domain/UserCard'
+import UserCardSkeleton from '#components/domain/UserCard/UserCard.skeleton.tsx'
 import { Input } from '#components/_common/Input'
 import { Button } from '#components/_common/Button'
 

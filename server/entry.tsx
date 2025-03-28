@@ -7,7 +7,7 @@ import {
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router'
-import routes from '../src/routes'
+import routes from '#routes/routes.tsx'
 
 import type { i18n } from 'i18next'
 import { I18nextProvider } from 'react-i18next'

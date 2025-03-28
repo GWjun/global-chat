@@ -10,11 +10,10 @@ import bcryptjs from 'bcryptjs'
 import prisma from '@utils/prisma.ts'
 import { TokenService } from '@services/auth/token.ts'
 import { getAPIError } from '@utils/getAPIError.ts'
-import { BASE_URL, END_POINTS } from '@routes/path.ts'
 
 export default async function authRouter(fastify: FastifyInstance) {
   const tokenService = new TokenService(fastify)
-  const COOKIE_PATH = `${BASE_URL}/${END_POINTS.AUTH}`
+  const COOKIE_PATH = `/`
 
   fastify.post<{ Body: RegisterDto }>(
     '/register',
