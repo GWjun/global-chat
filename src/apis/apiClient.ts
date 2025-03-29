@@ -64,3 +64,18 @@ export const authFetcher = baseFetcher.extend({
     ],
   },
 })
+
+export const createAuthFetcher = (token?: string) => {
+  return baseFetcher.extend({
+    hooks: {
+      beforeRequest: [
+        (req) => {
+          const accessToken = token || useAuthStore.getState().accessToken
+          if (!accessToken) return
+
+          req.headers.set('Authorization', `Bearer ${accessToken}`)
+        },
+      ],
+    },
+  })
+}
