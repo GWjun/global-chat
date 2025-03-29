@@ -1,22 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Languages, MonitorSmartphone, Users } from 'lucide-react'
 
 import { Button } from '#components/_common/Button'
-import { PATH } from '#routes.tsx'
-import { useAuthStore } from '#stores/authStore.ts'
+import { PATH } from '#routes/path.ts'
 
 export default function Home() {
   const { t } = useTranslation('home')
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(PATH.CHAT, { replace: true })
-    }
-  }, [isAuthenticated, navigate])
 
   return (
     <main className="flex flex-col items-center justify-center min-h-[100dvh] m-auto px-5">

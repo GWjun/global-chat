@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 import { MessageCircleMore } from 'lucide-react'
 
-import UserCard from '#components/UserCard'
+import UserCard from 'src/components/domain/UserCard'
 import { Button } from '#components/_common/Button'
-import { PATH } from '#routes.tsx'
+
+import { PATH } from '#routes/path.ts'
 
 export default function Friend() {
   const { t } = useTranslation('friend')

@@ -2,18 +2,18 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { act, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 
-import { useAuthStore } from '#stores/authStore'
-import { PATH } from '#routes.tsx'
+import { useAuthStore } from '#stores/authStore.ts'
 
-import VisitorOutlet from '.'
+import VisitorLayout from './VisitorLayout'
+import { PATH } from '#routes/path.ts'
 
-describe('VisitorOutlet 컴포넌트 테스트', () => {
+describe('VisitorLayout 컴포넌트 테스트', () => {
   beforeEach(() => {
     useAuthStore.setState({ isAuthenticated: false })
     render(
       <MemoryRouter initialEntries={['/login']}>
         <Routes>
-          <Route element={<VisitorOutlet />}>
+          <Route element={<VisitorLayout />}>
             <Route
               path={'/login'}
               element={<div data-testid="test-login-page" />}

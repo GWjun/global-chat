@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event'
 import renderWithProvider from '&/test/util/renderWithProvider.tsx'
 
 import { useNavigate } from 'react-router'
-import { PATH } from '#routes'
 
 import Login from '.'
+import { PATH } from '#routes/path.ts'
 
 vi.mock('react-router')
 

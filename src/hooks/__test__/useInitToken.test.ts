@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import useInitToken from '../useInitToken'
+import { useInitToken } from '../useInitToken'
 
 import { useAuthStore } from '#stores/authStore'
 import { BASE_URL, END_POINTS } from '@routes/path.ts'
@@ -14,17 +14,17 @@ describe('useInitToken 훅 테스트', () => {
     useAuthStore.setState({ setAccessToken: vi.fn() })
   })
 
-  test('refresh 요청이 성공하면 accessToken을 초기화하고 isPending을 false로 설정한다', async () => {
-    const { result } = renderHook(() => useInitToken())
+  test('refresh 요청이 성공하면 accessToken을 초기화한다', async () => {
+    renderHook(() => useInitToken())
 
-    expect(result.current.isPending).toBe(true)
-    await waitFor(() => expect(result.current.isPending).toBe(false))
-    expect(useAuthStore.getState().setAccessToken).toHaveBeenCalledWith(
-      'new-mock-access-token',
-    )
+    await waitFor(() => {
+      expect(useAuthStore.getState().setAccessToken).toHaveBeenCalledWith(
+        'new-mock-access-token',
+      )
+    })
   })
 
-  test('refresh 요청이 실해하면 accessToken을 초기화하지 않고 isPending을 false로 설정한다', async () => {
+  test('refresh 요청이 실해하면 accessToken을 초기화하지 않는다', async () => {
     mswServer.use(
       http.post(`${BASE_URL}/${END_POINTS.AUTH}/refresh`, () => {
         return mswResponse({
@@ -34,10 +34,10 @@ describe('useInitToken 훅 테스트', () => {
       }),
     )
 
-    const { result } = renderHook(() => useInitToken())
+    renderHook(() => useInitToken())
 
-    expect(result.current.isPending).toBe(true)
-    await waitFor(() => expect(result.current.isPending).toBe(false))
-    expect(useAuthStore.getState().setAccessToken).not.toHaveBeenCalled()
+    await waitFor(() => {
+      expect(useAuthStore.getState().setAccessToken).not.toHaveBeenCalled()
+    })
   })
 })

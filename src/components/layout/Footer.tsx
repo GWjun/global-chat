@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { MessageCircleMore, User, Users } from 'lucide-react'
 import { cn } from '#components/lib/utils'
-import { PATH } from '#routes.tsx'
 import { Link } from 'react-router'
 import { widthStyle } from '#App.tsx'
+import { PATH } from '#routes/path.ts'
 
 interface FooterProps {
   pathname: string

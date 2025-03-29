@@ -7,10 +7,10 @@ import { Button } from '#components/_common/Button'
 import { Input } from '#components/_common/Input'
 import { Label } from '#components/_common/Label'
 import { ErrorMessage } from '#components/_common/ErrorMessage'
-import { PATH } from '#routes.tsx'
 
 import type { RegisterDto } from '@dto/auth.ts'
 import { useRegisterMutation } from '#queries/auth/useRegisterMutation'
+import { PATH } from '#routes/path.ts'
 
 export default function Register() {
   const { t } = useTranslation('register')

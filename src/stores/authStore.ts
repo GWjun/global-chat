@@ -6,7 +6,7 @@ interface AuthStore {
   accessToken: string | null
   isAuthenticated: boolean
   setAccessToken: (token: string) => void
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
