@@ -18,6 +18,7 @@ import Profile from '#pages/Profile'
 import FriendFind from '#pages/FriendFind'
 
 import { PATH } from '#routes/path.ts'
+import * as Loaders from '#routes/loaders.ts'
 
 const routes: RouteObject[] = [
   {
@@ -68,6 +69,7 @@ const routes: RouteObject[] = [
               {
                 path: PATH.PROFILE,
                 element: <Profile />,
+                loader: Loaders.profileLoader,
               },
             ],
           },

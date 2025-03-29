@@ -11,6 +11,7 @@ const queryClient = new QueryClient({
     queries: {
       throwOnError: true, // reset data on ErrorBoundary Component
       retry: 0,
+      staleTime: 60 * 1000, // for ssr adaption
     },
   },
   mutationCache: new MutationCache({
