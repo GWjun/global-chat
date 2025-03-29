@@ -10,7 +10,7 @@ import fastifyCompress from '@fastify/compress'
 
 import { createServer } from 'vite'
 import { createFetchRequest, loadRender, loadTemplate } from '@utils/ssr.ts'
-import { authSSRMiddleware } from '@middlewares/authSSRMiddleware.ts'
+import { authMiddleware } from '@middlewares/authMiddleware.ts'
 import plugins from '@plugins'
 import routes from '@routes'
 import APIError from '#apis/APIError.ts'
@@ -50,7 +50,7 @@ server.addHook('preHandler', async (req, reply) => {
 
   if (isHtmlRequest && !url.startsWith('/api/')) {
     return new Promise<void>((resolve) => {
-      authSSRMiddleware(req, reply, () => {
+      authMiddleware(req, reply, () => {
         resolve()
       })
     })
@@ -113,6 +113,7 @@ server.setErrorHandler((error, req, reply) => {
       message: req.i18n.t(error.errorCode),
     })
   } else {
+    console.error(error)
     reply.status(500).send({
       statusCode: 500,
       errorCode: 'INTERNAL_SERVER_ERROR',

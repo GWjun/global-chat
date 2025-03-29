@@ -26,7 +26,7 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 
    ```sh
    pnpm docker:start
-   pnpx prisma generate
+   npx prisma dp push
    ```
 
 2. Start Application

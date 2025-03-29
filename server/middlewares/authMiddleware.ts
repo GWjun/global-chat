@@ -10,7 +10,7 @@ function isProtectedRoute(url: string): boolean {
 }
 
 // SSR authentication middleware
-export async function authSSRMiddleware(
+export async function authMiddleware(
   req: FastifyRequest,
   reply: FastifyReply,
   done: () => void,
@@ -19,12 +19,8 @@ export async function authSSRMiddleware(
   const url = req.url
   const redirectUrl = '/login?redirect=' + encodeURIComponent(url)
 
-  console.log('url', url)
-
   if (isProtectedRoute(url)) {
     const signedCookie = req.cookies.refreshToken
-
-    console.log('signedCookie', signedCookie)
 
     // If there is no cookie
     if (!signedCookie) {
