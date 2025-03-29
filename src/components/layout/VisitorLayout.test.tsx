@@ -7,7 +7,7 @@ import { useAuthStore } from '#stores/authStore.ts'
 import VisitorLayout from './VisitorLayout'
 import { PATH } from '#routes/path.ts'
 
-describe('VisitorOutlet 컴포넌트 테스트', () => {
+describe('VisitorLayout 컴포넌트 테스트', () => {
   beforeEach(() => {
     useAuthStore.setState({ isAuthenticated: false })
     render(

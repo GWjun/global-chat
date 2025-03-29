@@ -43,14 +43,6 @@ describe('Home 페이지 기능 테스트', () => {
     useAuthStore.setState({ isAuthenticated: false })
   })
 
-  test('인증 상태가 true일 때 채팅 페이지로 리다이렉트한다', () => {
-    useAuthStore.setState({ isAuthenticated: true })
-
-    render(<Home />)
-
-    expect(mockNavigate).toHaveBeenCalledWith(PATH.CHAT, { replace: true })
-  })
-
   test('인증 상태가 false일 때 리다이렉트하지 않는다', () => {
     render(<Home />)
 

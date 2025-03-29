@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { act, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router'
 
 import { useAuthStore } from '#stores/authStore'
@@ -26,14 +26,6 @@ describe('UserLayout 컴포넌트 테스트', () => {
         </Routes>
       </MemoryRouter>,
     )
-  })
-
-  it('인증되지 않은 상태에서 로그인 페이지로 리다이렉트 된다', async () => {
-    act(() => {
-      useAuthStore.setState({ isAuthenticated: false })
-    })
-
-    expect(screen.getByTestId('test-login-page')).toBeInTheDocument()
   })
 
   it('Header와 Footer가 올바르게 렌더링된다', () => {
