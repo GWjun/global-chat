@@ -153,6 +153,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      es-toolkit:
+        specifier: ^1.34.1
+        version: 1.34.1
       eslint:
         specifier: ^9.15.0
         version: 9.16.0(jiti@1.21.7)
@@ -1867,6 +1870,9 @@ packages:
 
   es-module-lexer@1.5.4:
     resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
+
+  es-toolkit@1.34.1:
+    resolution: {integrity: sha512-OA6cd94fJV9bm8dWhIySkWq4xV+rAQnBZUr2dnpXam0QJ8c+hurLbKA8/QooL9Mx4WCAxvIDsiEkid5KPQ5xgQ==}
 
   esbuild@0.21.5:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
@@ -4916,6 +4922,8 @@ snapshots:
   entities@4.5.0: {}
 
   es-module-lexer@1.5.4: {}
+
+  es-toolkit@1.34.1: {}
 
   esbuild@0.21.5:
     optionalDependencies:

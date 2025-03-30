@@ -1,6 +1,9 @@
+import type { UserResponse } from '#apis/types/user.ts'
+
 import { useTranslation } from 'react-i18next'
-import { ChevronRight, Languages } from 'lucide-react'
+import { useLoaderData } from 'react-router'
 import { useOverlay } from '@toss/use-overlay'
+import { ChevronRight, Languages } from 'lucide-react'
 
 import { useProfileQuery } from '#queries/user/useProfileQuery.ts'
 import {
@@ -9,14 +12,14 @@ import {
   DrawerDescription,
   DrawerTitle,
 } from '#components/_common/Drawer'
-import { Skeleton } from '#components/_common/Skeleton'
 import { LANGUAGES } from '#constants/languages.ts'
 
 export default function Profile() {
   const { t, i18n } = useTranslation('profile')
   const overlay = useOverlay()
 
-  const { data, isLoading } = useProfileQuery()
+  const initialData: UserResponse = useLoaderData()
+  const { data } = useProfileQuery(initialData)
 
   function openDrawer() {
     return overlay.open(({ isOpen, close }) => (
@@ -48,17 +51,8 @@ export default function Profile() {
   return (
     <div className="flex flex-col justify-center items-center p-4">
       <div className="flex flex-col items-center gap-3 mt-20">
-        {isLoading ? (
-          <>
-            <Skeleton className="w-24 h-5 mt-3" />
-            <Skeleton className="w-40 h-4 mt-2" />
-          </>
-        ) : (
-          <>
-            <h2 className="text-2xl font-bold">{data?.nickname}</h2>
-            <p className="text-sub">{data?.email}</p>
-          </>
-        )}
+        <h2 className="text-2xl font-bold">{data?.nickname}</h2>
+        <p className="text-sub">{data?.email}</p>
       </div>
 
       <button

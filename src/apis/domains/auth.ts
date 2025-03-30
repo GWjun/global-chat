@@ -12,10 +12,14 @@ export const requestPostLogin = async (data: LoginDto) => {
   return response.json()
 }
 
-export const requestPostRefresh = async () => {
+export const requestPostRefresh = async (cookie?: string | undefined) => {
   const response = await baseFetcher.post<{
     accessToken: string
-  }>(`${END_POINTS.AUTH}/refresh`)
+  }>(`${END_POINTS.AUTH}/refresh`, {
+    headers: {
+      cookie,
+    },
+  })
 
   return response.json()
 }
