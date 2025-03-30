@@ -1,8 +1,9 @@
 import type { UserResponse } from '#apis/types/user.ts'
 
 import { useTranslation } from 'react-i18next'
-import { ChevronRight, Languages } from 'lucide-react'
+import { useLoaderData } from 'react-router'
 import { useOverlay } from '@toss/use-overlay'
+import { ChevronRight, Languages } from 'lucide-react'
 
 import { useProfileQuery } from '#queries/user/useProfileQuery.ts'
 import {
@@ -12,7 +13,6 @@ import {
   DrawerTitle,
 } from '#components/_common/Drawer'
 import { LANGUAGES } from '#constants/languages.ts'
-import { useLoaderData } from 'react-router'
 
 export default function Profile() {
   const { t, i18n } = useTranslation('profile')
