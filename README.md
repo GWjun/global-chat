@@ -11,7 +11,7 @@ This project sets up a real-time chat service that leverages the LLM API to prov
    ```bash
    git clone https://github.com/GWjun/global-chat.git
    cd global-chat
-   pnpm install
+   yarn install
    ```
 
 2. Create a .env file
@@ -25,7 +25,7 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 1. Start Database
 
    ```sh
-   pnpm docker:start
+   yarn docker:start
    npx prisma db push
    ```
 
@@ -34,13 +34,13 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 - **Development:**
 
   ```bash
-  pnpm dev
+  yarn dev
   ```
 
 - **Start Production Server:**
 
   ```bash
-  pnpm start
+  yarn start
   ```
 
   Builds the application and starts the server in production mode.
@@ -53,7 +53,7 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 ├── dist/                # Production build output
 ├── src/                 # React application source files
 │   ├── main.tsx         # Client-side entry point
-│   └── route.tsx        # Route object
+│   └── routes/           # Route objects
 └── server/              # Fastify server code
     ├── entry.tsx        # Server-side entry point for SSR render
     └── main.ts          # Main server file
