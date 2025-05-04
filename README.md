@@ -53,7 +53,7 @@ This project sets up a real-time chat service that leverages the LLM API to prov
 ├── dist/                # Production build output
 ├── src/                 # React application source files
 │   ├── main.tsx         # Client-side entry point
-│   └── route.tsx        # Route object
+│   └── routes/           # Route objects
 └── server/              # Fastify server code
     ├── entry.tsx        # Server-side entry point for SSR render
     └── main.ts          # Main server file

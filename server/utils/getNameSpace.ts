@@ -1,10 +1,9 @@
 export function getNameSpace(url: string): string[] {
   const defaultNamespaces = ['common', 'error']
 
-  // 첫 번째 경로 추출
-  const path = url.split('/')[1]?.toLowerCase() || 'home'
-
-  console.log(path)
+  const path =
+    new URL(url, 'http://dummybase').pathname.split('/')[1]?.toLowerCase() ||
+    'home'
 
   const routeNamespaceMap: Record<string, string[]> = {
     home: ['home'],

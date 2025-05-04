@@ -93,7 +93,7 @@ routes.forEach(({ route, prefix }) => {
 })
 
 server.setErrorHandler((error, req, reply) => {
-  // console.error(error)
+  console.error(error)
 
   if (error.validation) {
     reply.status(400).send({
@@ -151,6 +151,8 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       initialI18nStore[initialLanguage] = {}
 
       const requiredNamespaces = getNameSpace(req.url)
+
+      console.log('requiredNamespaces', requiredNamespaces)
 
       requiredNamespaces.forEach((ns) => {
         if (req.i18n.services.resourceStore.data[initialLanguage]?.[ns]) {
