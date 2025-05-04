@@ -4,7 +4,7 @@ import Backend from 'i18next-http-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import { I18N_APP_NAMESPACES } from '@i18nNamespaces.ts'
 
-// load 'common', 'error', and the current route's namespace during initial render
+// load 'common' and the current route's namespace during initial render
 i18next
   .use(Backend)
   .use(LanguageDetector)
@@ -12,8 +12,8 @@ i18next
   .init({
     // debug: true,
     fallbackLng: 'en',
-    ns: ['common', 'error', ...I18N_APP_NAMESPACES],
-    defaultNS: 'common',
+    ns: ['error'],
+    defaultNS: 'error', // to avoid 'translation' invalid namespace loading
     load: 'languageOnly',
     interpolation: {
       escapeValue: false,

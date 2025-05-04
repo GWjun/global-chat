@@ -9,7 +9,7 @@ import { PATH } from '#routes/path.ts'
  * @returns An array of namespace strings.
  */
 export function getNameSpace(url: string): string[] {
-  const defaultNamespaces = ['common', 'error']
+  const defaultNamespaces = ['common']
   const pathname = new URL(url, 'http://dummy-base').pathname
 
   // Extract only string-based route patterns from PATH (skip functional entries)
