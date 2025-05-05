@@ -1,5 +1,6 @@
 import type { RouteObject } from 'react-router'
 import { Suspense } from 'react'
+import { loadableAsComponentType } from '#utils/loadableAsComponentType.ts'
 import App from '../App.tsx'
 
 import Error from '#pages/Error'
@@ -7,15 +8,15 @@ import NotFound from '#pages/NotFound'
 import VisitorLayout from '#components/layout/VisitorLayout.tsx'
 import UserLayout from '#components/layout/UserLayout.tsx'
 
-// don't need to lazy loading
-import Home from '#pages/Home'
-import Login from '#pages/Login'
-import Register from '#pages/Register'
+// use loadable library for SSR support
+const Home = loadableAsComponentType(() => import('#pages/Home'))
+const Login = loadableAsComponentType(() => import('#pages/Login'))
+const Register = loadableAsComponentType(() => import('#pages/Register'))
 
-import Chat from '#pages/Chat'
-import Friend from '#pages/Friend'
-import Profile from '#pages/Profile'
-import FriendFind from '#pages/FriendFind'
+const Chat = loadableAsComponentType(() => import('#pages/Chat'))
+const Friend = loadableAsComponentType(() => import('#pages/Friend'))
+const Profile = loadableAsComponentType(() => import('#pages/Profile'))
+const FriendFind = loadableAsComponentType(() => import('#pages/FriendFind'))
 
 import { PATH } from '#routes/path.ts'
 import * as Loaders from '#routes/loaders.ts'
