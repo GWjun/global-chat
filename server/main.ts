@@ -137,7 +137,11 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
   const render = await loadRender(vite)
 
   const parts = template.split('<!--ssr-outlet-->')
-  res.write(parts[0])
+  res.write(parts[0]) // start part
+
+  const userSetLanguage =
+    req.cookies.i18nextLng ?? req.i18n.language.slice(0, 2)
+  await req.i18n.changeLanguage(userSetLanguage) // set the language
 
   const { stream } = await render(fetchRequest, {
     i18n: req.i18n,
@@ -145,30 +149,26 @@ async function handleSSR(req: FastifyRequest, reply: FastifyReply) {
       stream.pipe(res)
     },
     onAllReady() {
-      const initialLanguage =
-        req.cookies.i18nextLng ?? req.i18n.language.slice(0, 2)
       const initialI18nStore: Resource = {}
-      initialI18nStore[initialLanguage] = {}
+      initialI18nStore[userSetLanguage] = {}
 
       const requiredNamespaces = getNameSpace(req.url)
-
-      console.log('requiredNamespaces', requiredNamespaces)
-
       requiredNamespaces.forEach((ns) => {
-        if (req.i18n.services.resourceStore.data[initialLanguage]?.[ns]) {
-          initialI18nStore[initialLanguage][ns] =
-            req.i18n.services.resourceStore.data[initialLanguage][ns]
+        if (req.i18n.services.resourceStore.data[userSetLanguage]?.[ns]) {
+          initialI18nStore[userSetLanguage][ns] =
+            req.i18n.services.resourceStore.data[userSetLanguage][ns]
         }
       })
 
+      // add the initial i18n store and language to the script tag
       const script = `
         <script>
           window.initialI18nStore = ${JSON.stringify(initialI18nStore)};
-          window.initialLanguage = "${initialLanguage}";
+          window.initialLanguage = "${userSetLanguage}";
         </script>`
 
       parts[1] = parts[1].replace('<!--ssr-script-->', script)
-      res.write(parts[1])
+      res.write(parts[1]) // end part
       res.end()
     },
   })
