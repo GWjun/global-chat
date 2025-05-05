@@ -16,7 +16,7 @@ interface userInfo {
 
 const FriendFind = () => {
   const { t } = useTranslation('friend')
-  const { value, debouncedValue, onChange } = useDebouncedInputValue(500)
+  const { value, debouncedValue, onChange } = useDebouncedInputValue('', 500)
 
   // const { data: searchResults = [], isLoading } =
   //   useSearchFriends(debouncedValue)
@@ -38,7 +38,7 @@ const FriendFind = () => {
         autoFocus
         className="h-12"
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value)}
       />
 
       {isLoading && <UserCardSkeleton count={3} className="space-y-3 mt-6" />}
