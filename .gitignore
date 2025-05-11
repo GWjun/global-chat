@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# package
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -29,3 +38,8 @@ dist-ssr
 
 # Test
 coverage
+
+# Prisma ORM
+generated
+
+
